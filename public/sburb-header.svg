@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 250">
+	<defs>
+		<mask id="shadow">
+			<rect x="0" y="0" width="100%" height="100%" fill="white" />
+			<circle cx="81.5" cy="110" r="112" />
+			<rect x="0" y="0" width="393" height="125" />
+		</mask>
+	</defs>
+
+	<!-- Shadow -->
+	<rect x="140" y="115" width="153" height="33" fill="#ccc" pointer-events="all" />
+	<rect x="200" y="115" width="144" height="18" fill="#ccc" pointer-events="all" />
+
+	<!-- White bar -->
+	<rect x="175" y="115" width="169" height="33" rx="5" fill="#FFF" mask="url(#shadow)" />
+
+	<!-- Green shape -->
+	<path
+		d="
+			M 0,0
+			h 393
+			v 88
+			a 34,34 0 0 1 -34,34
+			h -172
+			A 106.5,106.5 0 0 1 0,179
+			z
+		"
+		fill="#72E655" />
+</svg>
