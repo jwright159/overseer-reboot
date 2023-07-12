@@ -174,7 +174,7 @@ export default function SBURBHeader()
 					<ul>
 						{navLinks.map(navLink => (
 							<li key={navLink.text} className={styles.navButton}>
-								<Link href={navLink.link ?? "#"}>
+								<Link href={navLink.link ?? (navLink.links ? navLink.links[0].link : "#")}>
 									<Image
 										src={`/images/header/${navLink.icon}`}
 										alt={navLink.text}
