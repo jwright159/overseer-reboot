@@ -1,0 +1,207 @@
+.headerSpacer {
+	margin-bottom: 173px;
+}
+
+.header {
+	position: fixed;
+	top: 0;
+	width: 100%;
+	z-index: 999;
+}
+
+.avatar {
+	position: absolute;
+	left: 4px;
+	top: 41px;
+	width: 154px;
+	height: 154px;
+	border-radius: 77px;
+}
+
+.statBox {
+	position: absolute;
+	background-color:#fff;
+	padding: 2px;
+	border-radius: 2px;
+	box-shadow: 3px 3px 0 rgba(0,0,0,0.3);
+	height: 26px;
+	vertical-align: top;
+	text-overflow: clip;
+	white-space: nowrap;
+	overflow: hidden;
+}
+
+.statBox a {
+	display: flex;
+	color:#000;
+	text-decoration: none;
+	width: 100%;
+	height: 100%;
+	align-items: center;
+}
+
+.statBox img {
+	margin-right: 10px;
+}
+
+.statBox p {
+	padding-top: 3px;
+}
+
+.characterSwitch {
+	position: absolute;
+	left: 4px;
+	top: 4px;
+	width: 34px;
+	height: 34px;
+	border-radius: 17px;
+	background: url(/images/header/characterswitch.png) no-repeat center center, white;
+}
+
+.characterName {
+	padding-left: 15px;
+	left: 24px;
+	top: 9px;
+	width: 174px;
+}
+
+.echeladder {
+	left: 208px;
+	top: 9px;
+	width: 63px;
+}
+
+.powerlevel {
+	left: 276px;
+	top: 9px;
+	width: 79px;
+}
+
+.classpect {
+	position: absolute;
+	top: 160px;
+	width: 162px;
+	height: 26px;
+	text-align: center;
+}
+
+.classpect p {
+	position: relative;
+	background-color: #f3f3f3;
+	display: inline;
+	padding: 3px;
+	border-radius: 2px;
+	box-shadow: 3px 3px 0 rgba(0,0,0,0.3);
+	white-space: nowrap;
+}
+
+.statBar {
+	height: 24px;
+	padding-right: 4px;
+	padding-top: 3px;
+}
+
+.statBarInner {
+	height: 18px;
+	margin: 0; padding: 0; border: 0;
+	transition-property: width;
+	transition-duration: 1s;
+}
+
+.healthBar {
+	position: absolute;
+	top: 47px;
+	left: 177px;
+	width: 164px;
+}
+
+.aspectBar {
+	position: absolute;
+	top: 78px;
+	left: 202px;
+	width: 139px;
+}
+
+.statBubble {
+	border-radius: 18px;
+	background-color: white;
+	text-align: center;
+	vertical-align: center;
+	width: 36px;
+	height: 36px;
+}
+
+.healthBubble {
+	position: absolute;
+	left: 145px;
+	top: 41px;
+}
+
+.aspectBubble {
+	position: absolute;
+	left: 170px;
+	top: 72px;
+}
+
+.boondollarBubble {
+	position: absolute;
+	left: 189px;
+	top: 123px;
+}
+
+.boondollars {
+	position: absolute;
+	left: 216px;
+	top: 128px;
+}
+
+.overseerLogo {
+	position: absolute;
+	top: 0;
+	right: 0;
+	height: 75px;
+}
+
+.navBar {
+	position: absolute;
+	top: 0px;
+	left: 358px;
+	height: 75px;
+	background-color: white;
+	border-radius: 0 0 8px 38px;
+	padding: 10px;
+}
+
+.navBar > ul {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+	display: flex;
+	justify-content: space-around;
+}
+
+.navButton ul {
+	display: none;
+	padding: 5px;
+	background-color: #c8f4c6;
+	position: absolute;
+	top: 65px;
+	list-style: none;
+}
+
+.navButton ul li {
+	border-bottom: black 1px solid;
+}
+
+.navButton:hover > ul {
+	display: block;
+}
+
+@media screen and (max-width: 1159px) {
+	.overseerLogo { width: 84px; background-image: url(/images/header/overseerlogo.png); }
+	.navBar { width: calc(100% - 435px); }
+}
+@media screen and (min-width: 1160px) {
+	.overseerLogo { width: 280px; background-image: url(/images/header/overseertitle.png); }
+	.navBar { width: calc(100% - 631px); }
+}

@@ -4,7 +4,7 @@ import styles from './panel.module.css'
 export default function Panel({
 	children,
 	title,
-	icon = "/spirograph.png",
+	icon = "/images/header/spirograph.png",
 }: {
 	children: React.ReactNode,
 	title: string,
