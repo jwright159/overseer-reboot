@@ -24,6 +24,7 @@ export default function SBURBHeader()
 		{
 			text: "Player",
 			icon: "chummy.png",
+			color: "#EC008C",
 			links: [
 				{ text: "Character Profile", link: "/overview" },
 				{ text: "Character Log", link: "/logread" },
@@ -33,6 +34,7 @@ export default function SBURBHeader()
 		{
 			text: "Strife",
 			icon: "rancorous.png",
+			color: "#FFA812",
 			links: [
 				{ text: "Strife!", link: "/strife" },
 				{ text: "Portfolio", link: "/portfolio" },
@@ -44,6 +46,7 @@ export default function SBURBHeader()
 		{
 			text: "Exploration",
 			icon: "compass.png",
+			color: "#00DD00",
 			links: [
 				{ text: "Dungeons", link: "/dungeons" },
 				{ text: "Consorts", link: "/consorts" },
@@ -58,6 +61,7 @@ export default function SBURBHeader()
 		{
 			text: "Inventory",
 			icon: "inventory.png",
+			color: "#CCAD00",
 			links: [
 				{ text: "Inventory", link: "/inventory" },
 				{ text: "Alchemy", link: "/alchemy" },
@@ -69,6 +73,7 @@ export default function SBURBHeader()
 		{
 			text: "Atheneum",
 			icon: "atheneum.png",
+			color: "#00C0FF",
 			links: [
 				{ text: "Atheneum", link: "/atheneum" },
 				{ text: "Item Catalogue", link: "/catalogue" },
@@ -78,6 +83,7 @@ export default function SBURBHeader()
 		{
 			text: "SBURB",
 			icon: "spirograph.png",
+			color: "#E066FF",
 			links: [
 				{ text: "SBURB Server", link: "/sburb-server" },
 				{ text: "SBURB Devices", link: "/sburb-devices" },
@@ -87,6 +93,7 @@ export default function SBURBHeader()
 		{
 			text: "Social",
 			icon: "pester.png",
+			color: "#3B4990",
 			links: [
 				{ text: "Session Viewer", link: "/session-info" },
 				{ text: "Session Stats", link: "/session-stats" },
@@ -102,6 +109,7 @@ export default function SBURBHeader()
 		{
 			text: "Meta Stuff",
 			icon: "whatpumpkin.png",
+			color: "#B22222",
 			links: [
 				{ text: "Changelog", link: "/changelog" },
 				{ text: "New Ability Scanner", link: "/ability-scan" },
@@ -136,20 +144,20 @@ export default function SBURBHeader()
 
 				<div
 					className={[styles.statBar, styles.healthBar].join(" ")}
-					style={{ background: `url(/images/header/aspect/${aspect}_statbarcend.png) top right no-repeat, url(/images/header/aspect/${aspect}_statbarcrepeat.png) top right repeat-x;` }}
+					style={{ background: `url(/images/header/aspect/${aspect}_statbarcend.png) top right no-repeat, url(/images/header/aspect/${aspect}_statbarcrepeat.png) top right repeat-x` }}
 				>
 					<div
 						className={styles.statBarInner}
-						style={{ width: `${healthPercent}%`, background: `url(/images/header/aspect/${aspect}_statbarend.png) top right no-repeat, url(/images/header/aspect/${aspect}_statbarrepeat.png) top right repeat-x;` }}
+						style={{ width: `${healthPercent}%`, background: `url(/images/header/aspect/${aspect}_statbarend.png) top right no-repeat, url(/images/header/aspect/${aspect}_statbarrepeat.png) top right repeat-x` }}
 					/>
 				</div>
 				<div
 					className={[styles.statBar, styles.aspectBar].join(" ")}
-					style={{ background: `url(/images/header/aspect/${aspect}_statbarcend.png) top right no-repeat, url(/images/header/aspect/${aspect}_statbarcrepeat.png) top right repeat-x;` }}
+					style={{ background: `url(/images/header/aspect/${aspect}_statbarcend.png) top right no-repeat, url(/images/header/aspect/${aspect}_statbarcrepeat.png) top right repeat-x` }}
 				>
 					<div
 						className={styles.statBarInner}
-						style={{ width: `${energyPercent}%`, background: `url(/images/header/aspect/${aspect}_statbarend.png) top right no-repeat, url(/images/header/aspect/${aspect}_statbarrepeat.png) top right repeat-x;` }}
+						style={{ width: `${energyPercent}%`, background: `url(/images/header/aspect/${aspect}_statbarend.png) top right no-repeat, url(/images/header/aspect/${aspect}_statbarrepeat.png) top right repeat-x` }}
 					/>
 				</div>
 				<div className={[styles.statBubble, styles.healthBubble].join(" ")} title={`Health: ${Math.ceil(healthPercent)}% [${health}/${maxHealth}]`}>
@@ -178,7 +186,7 @@ export default function SBURBHeader()
 								{ navLink.links ?
 									<ul>
 										{navLink.links.map(subLink => (
-											<li key={subLink.text}><Link href={subLink.link}>{subLink.text}</Link></li>
+											<li key={subLink.text} style={{ color: navLink.color ?? "black", borderColor: navLink.color ?? "black" }}><Link href={subLink.link}>{subLink.text.toUpperCase()}</Link></li>
 										))}
 									</ul>
 								: undefined }

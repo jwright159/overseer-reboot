@@ -182,15 +182,24 @@
 
 .navButton ul {
 	display: none;
-	padding: 5px;
-	background-color: #c8f4c6;
+	background-color: transparent;
 	position: absolute;
 	top: 65px;
 	list-style: none;
 }
 
 .navButton ul li {
-	border-bottom: black 1px solid;
+	margin: 2px;
+	border: solid black 2px;
+	background-color: #EEEEEE;
+	padding: 2px 10px;
+}
+
+.navButton ul li a {
+	display: block;
+	text-decoration: none;
+	color: inherit;
+	font-weight: bold;
 }
 
 .navButton:hover > ul {
