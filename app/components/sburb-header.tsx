@@ -56,7 +56,10 @@ export default function SBURBHeader()
 		{
 			text: "Grist",
 			icon: "gristy.png",
-			link: "/gristwire"
+			color: "#009500",
+			links: [
+				{ text: "Grist", link: "/gristwire" },
+			]
 		},
 		{
 			text: "Inventory",
@@ -104,7 +107,10 @@ export default function SBURBHeader()
 		{
 			text: "Sleep",
 			icon: "sleep.png",
-			link: "/sleep"
+			color: "#8B4C39",
+			links: [
+				{ text: "Sleep", link: "/sleep" },
+			]
 		},
 		{
 			text: "Meta Stuff",
@@ -174,7 +180,7 @@ export default function SBURBHeader()
 					<ul>
 						{navLinks.map(navLink => (
 							<li key={navLink.text} className={styles.navButton}>
-								<Link href={navLink.link ?? (navLink.links ? navLink.links[0].link : "#")}>
+								<Link href={navLink.links[0].link}>
 									<Image
 										src={`/images/header/${navLink.icon}`}
 										alt={navLink.text}
