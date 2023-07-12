@@ -13,8 +13,8 @@ export default function Panel({
 {
 	return (
 		<div className={styles.layoutContainer}>
-			<div className={styles.contentContainer}>
-				<div className={styles.contentHeaderContainer}>
+			<div className={styles.contentHeaderContainer}>
+				<div className={styles.contentHeader}>
 					<Image
 						id="pageimg"
 						src={icon}
@@ -22,14 +22,14 @@ export default function Panel({
 						width={49}
 						height={49}
 					/>
-					<div className={styles.contentHeaderText}>{title}</div>
+					<h1>{title}</h1>
 				</div>
+			</div>
 
+			<div className={styles.contentAreaContainer}>
 				<div className={styles.contentArea}>
 					{children}
 				</div>
-
-				<div>Generated in ??? seconds</div>
 			</div>
 		</div>
 	)
