@@ -1,6 +1,8 @@
 import './globals.css'
 import type { Metadata } from 'next'
 import SBURBHeader from './components/sburb-header'
+import ClientContextProvider from './components/clientContextProvider'
+import prisma from './lib/prisma'
 
 export const metadata: Metadata = {
 	title: 'Overseer Reboot',
@@ -8,16 +10,20 @@ export const metadata: Metadata = {
 	keywords: 'homestuck,SBURB,rpg,game,browser game,simulator,roleplaying,rp,overseer project,alchemy,strifing',
 }
 
-export default function RootLayout({
+export default async function RootLayout({
 	children,
 }: {
 	children: React.ReactNode
 }) {
+	const power = (await prisma.sample.findUnique({ where: { id: 1 } }))?.power ?? 0
+
 	return (
 		<html lang="en">
 			<body>
-				<SBURBHeader />
-				{children}
+				<ClientContextProvider power={power}>
+					<SBURBHeader />
+					{children}
+				</ClientContextProvider>
 			</body>
 		</html>
 	)

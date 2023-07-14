@@ -1,6 +1,10 @@
+"use client"
+
 import Link from 'next/link'
 import Image from 'next/image'
 import styles from './sburb-header.module.css'
+import { useContext } from 'react'
+import { PowerContext } from '../lib/context'
 
 export default function SBURBHeader()
 {
@@ -10,7 +14,7 @@ export default function SBURBHeader()
 	const classs = "knight" // pick a better name lol // also casing
 	const aspect = "light"
 	const echeladder = 0
-	const strifePower = 0
+	const power = useContext(PowerContext)
 
 	const health = 1
 	const maxHealth = 1
@@ -146,7 +150,7 @@ export default function SBURBHeader()
 				<div className={[styles.statBox, styles.characterName].join(" ")}><p>{name}</p></div>
 				<Link href="/"><div className={styles.characterSwitch}></div></Link>
 				<div className={[styles.statBox, styles.echeladder].join(" ")}><Link href="/abilities"><img src="/images/header/echeladder.png"/><p>{echeladder}</p></Link></div>
-				<div className={[styles.statBox, styles.powerlevel].join(" ")}><Link href="/portfolio"><img src="/images/header/powerlevel.png"/><p>{strifePower}</p></Link></div>
+				<div className={[styles.statBox, styles.powerlevel].join(" ")}><Link href="/portfolio"><img src="/images/header/powerlevel.png"/><p>{power}</p></Link></div>
 
 				<div
 					className={[styles.statBar, styles.healthBar].join(" ")}
