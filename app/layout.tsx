@@ -2,7 +2,8 @@ import './globals.css'
 import type { Metadata } from 'next'
 import SBURBHeader from './components/sburb-header'
 import ClientContextProvider from './components/clientContextProvider'
-import prisma from './lib/prisma'
+import { getUser } from './lib/auth'
+import LoginForm from './components/login-form'
 
 export const metadata: Metadata = {
 	title: 'Overseer Reboot',
@@ -15,15 +16,22 @@ export default async function RootLayout({
 }: {
 	children: React.ReactNode
 }) {
-	const power = (await prisma.sample.findUnique({ where: { id: 1 } }))?.power ?? 0
+	const user = await getUser()
 
 	return (
 		<html lang="en">
 			<body>
-				<ClientContextProvider power={power}>
-					<SBURBHeader />
-					{children}
-				</ClientContextProvider>
+				{ user ?
+					<ClientContextProvider power={user.power}>
+						<SBURBHeader />
+						{children}
+					</ClientContextProvider>
+				:
+					<>
+						Not logged in
+						<LoginForm />
+					</>
+				}
 			</body>
 		</html>
 	)
