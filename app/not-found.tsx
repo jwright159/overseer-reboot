@@ -1,14 +1,18 @@
-import Panel from "./components/panel"
+import MainPanel from "./components/main-panel"
+import RootLayout from "./layout"
+import { headers } from "next/headers"
 
 export default function NotFound()
 {
+	const header = headers()
+
 	return (
-		<main>
-			<Panel
-				title="404 - Not Found"
+		<RootLayout>
+			<MainPanel
+				title={`404 - ${header.get("x-invoke-path")} Not Found`}
 			>
 				The requested resource was not found on the server.
-			</Panel>
-		</main>
+			</MainPanel>
+		</RootLayout>
 	)
 }

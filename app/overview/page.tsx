@@ -1,14 +1,9 @@
 "use client"
 
 import MainPanel from "../components/main-panel";
-import { changePower } from "../actions/power";
+import { changePower } from "../lib/power";
 import { useContext, useTransition } from "react";
 import { PowerContext, SetPowerContext } from "../lib/context";
-import { Metadata } from "next";
-
-export const metadata: Metadata = {
-	title: "Overseer Reboot - Character Overview",
-}
 
 export default function Overview()
 {

@@ -1,0 +1,27 @@
+.statBar {
+	height: 24px;
+	padding-right: 4px;
+	padding-top: 3px;
+}
+
+.statBarInner {
+	height: 18px;
+	margin: 0; padding: 0; border: 0;
+	transition-property: width;
+	transition-duration: 1s;
+}
+
+.statBubble {
+	border-radius: 18px;
+	background-color: white;
+	width: 36px;
+	height: 36px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.statBubble img {
+	width: 70%;
+	height: auto;
+}

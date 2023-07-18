@@ -9,6 +9,11 @@
 	z-index: 999;
 }
 
+.sburbBar {
+	position: absolute;
+	width: 400px;
+}
+
 .avatar {
 	position: absolute;
 	left: 4px;
@@ -16,6 +21,14 @@
 	width: 154px;
 	height: 154px;
 	border-radius: 77px;
+	background-color: white;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.avatar img {
+	width: 64px;
 }
 
 .statBox {
@@ -25,7 +38,6 @@
 	border-radius: 2px;
 	box-shadow: 3px 3px 0 rgba(0,0,0,0.3);
 	height: 26px;
-	vertical-align: top;
 	text-overflow: clip;
 	white-space: nowrap;
 	overflow: hidden;
@@ -95,24 +107,17 @@
 	white-space: nowrap;
 }
 
-.statBar {
-	height: 24px;
-	padding-right: 4px;
-	padding-top: 3px;
-}
-
-.statBarInner {
-	height: 18px;
-	margin: 0; padding: 0; border: 0;
-	transition-property: width;
-	transition-duration: 1s;
-}
-
 .healthBar {
 	position: absolute;
 	top: 47px;
 	left: 177px;
 	width: 164px;
+}
+
+.healthBar + div {
+	position: absolute;
+	left: 145px;
+	top: 41px;
 }
 
 .aspectBar {
@@ -122,22 +127,7 @@
 	width: 139px;
 }
 
-.statBubble {
-	border-radius: 18px;
-	background-color: white;
-	text-align: center;
-	vertical-align: center;
-	width: 36px;
-	height: 36px;
-}
-
-.healthBubble {
-	position: absolute;
-	left: 145px;
-	top: 41px;
-}
-
-.aspectBubble {
+.aspectBar + div {
 	position: absolute;
 	left: 170px;
 	top: 72px;
@@ -153,6 +143,18 @@
 	position: absolute;
 	left: 216px;
 	top: 128px;
+}
+
+.loggedOutTitle {
+	position: absolute;
+	left: 170px;
+	top: 20px;
+	width: 170px;
+	height: unset;
+	white-space: unset;
+	font-size: 16pt;
+	font-weight: bold;
+	padding-left: 5px;
 }
 
 .overseerLogo {

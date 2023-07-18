@@ -1,33 +1,46 @@
 "use client"
 
 import Link from 'next/link'
-import Image from 'next/image'
 import styles from './sburb-header.module.css'
-import { useContext, useTransition } from 'react'
-import { PowerContext } from '../lib/context'
 import { useRouter } from 'next/navigation'
 import { unsetUser } from '../lib/auth'
+import { useTransition } from 'react'
+import HeaderProgressBar from './header-progress-bar'
 
-export default function SBURBHeader()
+export default function SBURBHeader({
+	isLoggedIn = false,
+
+	name,
+	symbol,
+	boondollars,
+	aspect,
+	displayClasspect,
+	echeladderRung,
+	strifePower,
+
+	health,
+	maxHealth,
+	energy,
+	maxEnergy,
+}: {
+	isLoggedIn?: boolean,
+
+	name?: string,
+	symbol?: string,
+	boondollars?: number,
+	aspect?: string,
+	displayClasspect?: string,
+	echeladderRung?: number,
+	strifePower?: number,
+
+	health?: number,
+	maxHealth?: number,
+	energy?: number,
+	maxEnergy?: number,
+})
 {
 	const router = useRouter()
 	const [isLogoutPending, startLogoutTransition] = useTransition()
-
-	const name = "bepisdood"
-	const symbol = "aspect_light.png"
-	const boondollars = 0
-	const classs = "knight" // pick a better name lol // also casing
-	const aspect = "light"
-	const echeladder = 0
-	const power = useContext(PowerContext)
-
-	const health = 1
-	const maxHealth = 1
-	const healthPercent = maxHealth === 0 ? 100 : health / maxHealth * 100
-
-	const energy = 1
-	const maxEnergy = 1
-	const energyPercent = maxEnergy === 0 ? 100 : energy / maxEnergy * 100
 
 	const navLinks = [
 		{
@@ -142,69 +155,78 @@ export default function SBURBHeader()
 	return (
 		<header className={styles.headerSpacer}>
 			<div className={styles.header}>
-				<Image
+				<img
 					src="/sburb-header.svg"
-					alt="SBURB UI"
-					style={{ position: "absolute" }}
-					width={400}
-					height={250}
+					className={styles.sburbBar}
 				/>
 
-				<div className={styles.avatar} style={{ background: `url(/images/symbols/${symbol}) no-repeat center center, white` }}></div>
-				<div className={styles.classpect}><p>{`${classs} of ${aspect}`}</p></div>
-				<div className={[styles.statBox, styles.characterName].join(" ")}><p>{name}</p></div>
-				<button className={styles.characterSwitch} onClick={() => startLogoutTransition(() => unsetUser().then(() => router.refresh()))} disabled={isLogoutPending}></button>
-				<div className={[styles.statBox, styles.echeladder].join(" ")}><Link href="/abilities"><img src="/images/header/echeladder.png"/><p>{echeladder}</p></Link></div>
-				<div className={[styles.statBox, styles.powerlevel].join(" ")}><Link href="/portfolio"><img src="/images/header/powerlevel.png"/><p>{power}</p></Link></div>
+				{symbol !== undefined && <div className={styles.avatar}><img src={symbol} /></div>}
+				{displayClasspect !== undefined && <div className={styles.classpect}><p>{displayClasspect}</p></div>}
+				{name !== undefined && <div className={[styles.statBox, styles.characterName].join(" ")}><p>{name}</p></div>}
+				{isLoggedIn && <button className={styles.characterSwitch} onClick={() => startLogoutTransition(() => unsetUser().then(() => router.refresh()))} disabled={isLogoutPending}></button>}
+				{echeladderRung !== undefined && <div className={[styles.statBox, styles.echeladder].join(" ")}><Link href="/abilities"><img src="/images/header/echeladder.png"/><p>{echeladderRung}</p></Link></div>}
+				{strifePower !== undefined && <div className={[styles.statBox, styles.powerlevel].join(" ")}><Link href="/portfolio"><img src="/images/header/powerlevel.png"/><p>{strifePower}</p></Link></div>}
 
-				<div
-					className={[styles.statBar, styles.healthBar].join(" ")}
-					style={{ background: `url(/images/header/aspect/${aspect}_statbarcend.png) top right no-repeat, url(/images/header/aspect/${aspect}_statbarcrepeat.png) top right repeat-x` }}
-				>
-					<div
-						className={styles.statBarInner}
-						style={{ width: `${healthPercent}%`, background: `url(/images/header/aspect/${aspect}_statbarend.png) top right no-repeat, url(/images/header/aspect/${aspect}_statbarrepeat.png) top right repeat-x` }}
-					/>
-				</div>
-				<div
-					className={[styles.statBar, styles.aspectBar].join(" ")}
-					style={{ background: `url(/images/header/aspect/${aspect}_statbarcend.png) top right no-repeat, url(/images/header/aspect/${aspect}_statbarcrepeat.png) top right repeat-x` }}
-				>
-					<div
-						className={styles.statBarInner}
-						style={{ width: `${energyPercent}%`, background: `url(/images/header/aspect/${aspect}_statbarend.png) top right no-repeat, url(/images/header/aspect/${aspect}_statbarrepeat.png) top right repeat-x` }}
-					/>
-				</div>
-				<div className={[styles.statBubble, styles.healthBubble].join(" ")} title={`Health: ${Math.ceil(healthPercent)}% [${health}/${maxHealth}]`}>
-					<img src="/images/header/healthchum.png" style={{ marginTop: 3 }}/>
-				</div>
-				<div className={[styles.statBubble, styles.aspectBubble].join(" ")} title={`Health: ${Math.ceil(energyPercent)}% [${energy}/${maxEnergy}]`}>
-					<img src={`/images/symbols/aspect_${aspect}.png`} style={{ width: "100%", height: "100%" }}/>
-				</div>
+				{!isLoggedIn && <div className={[styles.statBox, styles.loggedOutTitle].join(" ")}><p>The Overseer Project: Reboot</p></div>}
+
+				{health !== undefined && maxHealth !== undefined && <HeaderProgressBar
+					value={health}
+					maxValue={maxHealth}
+
+					icon="/images/header/healthchum.png"
+
+					backgroundRepeat={`/images/header/aspect/${aspect}_statbarcrepeat.png`}
+					backgroundEnd={`/images/header/aspect/${aspect}_statbarcend.png`}
+					foregroundRepeat={`/images/header/aspect/${aspect}_statbarrepeat.png`}
+					foregroundEnd={`/images/header/aspect/${aspect}_statbarend.png`}
+
+					className={styles.healthBar}
+				/>}
+				{energy !== undefined && maxEnergy !== undefined && <HeaderProgressBar
+					value={energy}
+					maxValue={maxEnergy}
+
+					icon={`/images/symbols/aspect_${aspect}.png`}
+
+					backgroundRepeat={`/images/header/aspect/${aspect}_statbarcrepeat.png`}
+					backgroundEnd={`/images/header/aspect/${aspect}_statbarcend.png`}
+					foregroundRepeat={`/images/header/aspect/${aspect}_statbarrepeat.png`}
+					foregroundEnd={`/images/header/aspect/${aspect}_statbarend.png`}
+
+					className={styles.aspectBar}
+				/>}
 				
-				<Link href="/porkhollow"><img src="/images/header/boondollars.png" className={styles.boondollarBubble}/></Link>
-				<div className={styles.boondollars}>{boondollars}</div>
+				{boondollars !== undefined && <Link href="/porkhollow"><img src="/images/header/boondollars.png" className={styles.boondollarBubble}/></Link>}
+				{boondollars !== undefined && <div className={styles.boondollars}>{boondollars}</div>}
+
 				<span className={styles.overseerLogo}></span>
 				<nav className={styles.navBar}>
 					<ul>
 						{navLinks.map(navLink => (
 							<li key={navLink.text} className={styles.navButton}>
-								<Link href={navLink.links[0].link}>
-									<Image
+								{ isLoggedIn ? <>
+									<Link href={navLink.links[0].link}>
+										<img
+											src={`/images/header/${navLink.icon}`}
+											alt={navLink.text}
+											title={navLink.text}
+										/>
+									</Link>
+									{ navLink.links &&
+										<ul>
+											{navLink.links.map(subLink => (
+												<li key={subLink.text} className={subLink.disabled ? styles.disabledLink : undefined} style={{ color: navLink.color ?? "black", borderColor: navLink.color ?? "black" }}><Link href={subLink.link}>{subLink.text.toUpperCase()}</Link></li>
+											))}
+										</ul>
+									}
+								</> :
+									<img
 										src={`/images/header/${navLink.icon}`}
 										alt={navLink.text}
 										title={navLink.text}
-										width={49}
-										height={49}
+										style={{ filter: "grayscale(1)" }}
 									/>
-								</Link>
-								{ navLink.links ?
-									<ul>
-										{navLink.links.map(subLink => (
-											<li key={subLink.text} className={subLink.disabled ? styles.disabledLink : undefined} style={{ color: navLink.color ?? "black", borderColor: navLink.color ?? "black" }}><Link href={subLink.link}>{subLink.text.toUpperCase()}</Link></li>
-										))}
-									</ul>
-								: undefined }
+								}
 							</li>
 						))}
 					</ul>

@@ -1,9 +1,10 @@
 import './globals.css'
 import type { Metadata } from 'next'
-import SBURBHeader from './components/sburb-header'
+import SBURBHeaderForPlayer from './components/sburb-header-for-player'
 import ClientContextProvider from './components/clientContextProvider'
 import { getUser } from './lib/auth'
 import LoginForm from './components/login-form'
+import SBURBHeaderLite from './components/sburb-header-lite'
 
 export const metadata: Metadata = {
 	title: 'Overseer Reboot',
@@ -23,12 +24,12 @@ export default async function RootLayout({
 			<body>
 				{ user ?
 					<ClientContextProvider power={user.power}>
-						<SBURBHeader />
+						<SBURBHeaderForPlayer />
 						{children}
 					</ClientContextProvider>
 				:
 					<>
-						Not logged in
+						<SBURBHeaderLite />
 						<LoginForm />
 					</>
 				}
