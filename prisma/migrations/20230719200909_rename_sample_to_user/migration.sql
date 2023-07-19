@@ -1,0 +1,1 @@
+ALTER TABLE "Sample" RENAME TO "User";

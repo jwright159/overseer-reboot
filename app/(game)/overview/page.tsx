@@ -1,9 +1,9 @@
 "use client"
 
-import MainPanel from "../components/main-panel";
-import { changePower } from "../lib/power";
-import { useContext, useTransition } from "react";
-import { PowerContext, SetPowerContext } from "../lib/context";
+import MainPanel from "../../components/main-panel"
+import { changePower } from "../../lib/power"
+import { useContext, useTransition } from "react"
+import { PowerContext, SetPowerContext } from "../../lib/context"
 
 export default function Overview()
 {

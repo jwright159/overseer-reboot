@@ -1,10 +1,6 @@
+import { ReactNode } from 'react'
 import './globals.css'
 import type { Metadata } from 'next'
-import SBURBHeaderForPlayer from './components/sburb-header-for-player'
-import ClientContextProvider from './components/clientContextProvider'
-import { getUser } from './lib/auth'
-import LoginForm from './components/login-form'
-import SBURBHeaderLite from './components/sburb-header-lite'
 
 export const metadata: Metadata = {
 	title: 'Overseer Reboot',
@@ -15,24 +11,12 @@ export const metadata: Metadata = {
 export default async function RootLayout({
 	children,
 }: {
-	children: React.ReactNode
+	children: ReactNode,
 }) {
-	const user = await getUser()
-
 	return (
 		<html lang="en">
 			<body>
-				{ user ?
-					<ClientContextProvider power={user.power}>
-						<SBURBHeaderForPlayer />
-						{children}
-					</ClientContextProvider>
-				:
-					<>
-						<SBURBHeaderLite />
-						<LoginForm />
-					</>
-				}
+				{children}
 			</body>
 		</html>
 	)

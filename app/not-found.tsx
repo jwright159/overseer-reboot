@@ -1,6 +1,8 @@
+import "./globals.css"
 import MainPanel from "./components/main-panel"
-import RootLayout from "./layout"
 import { headers } from "next/headers"
+import RootLayout from "./layout"
+import { GameLayout } from "./(game)/layout"
 
 export default function NotFound()
 {
@@ -8,11 +10,13 @@ export default function NotFound()
 
 	return (
 		<RootLayout>
-			<MainPanel
-				title={`404 - ${header.get("x-invoke-path")} Not Found`}
-			>
-				The requested resource was not found on the server.
-			</MainPanel>
+			<GameLayout>
+				<MainPanel
+					title={`404 - ${header.get("x-invoke-path")} Not Found`}
+				>
+					The requested resource was not found on the server.
+				</MainPanel>
+			</GameLayout>
 		</RootLayout>
 	)
 }
