@@ -2,7 +2,7 @@
 
 import { useRouter } from "next/navigation"
 import { useState, useTransition } from "react"
-import { registerUser } from "../../lib/auth"
+import { registerUser } from "../../lib/registration"
 import MainPanel from "../../components/main-panel"
 
 export default function Register()

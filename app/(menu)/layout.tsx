@@ -1,8 +1,8 @@
 import { ReactNode } from "react"
-import { getUser } from "../lib/auth"
-import ClientContextProvider from "../components/clientContextProvider"
-import SBURBHeaderForPlayer from "../components/sburb-header-for-player"
-import SBURBHeaderLite from "../components/sburb-header-lite"
+import ClientContextProvider from "@/app/components/clientContextProvider"
+import SBURBHeaderForPlayer from "@/app/components/sburb-header-for-player"
+import SBURBHeaderLite from "@/app/components/sburb-header-lite"
+import { getUser } from "@/app/lib/auth"
 
 export default async function GameLayout({
 	children,

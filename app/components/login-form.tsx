@@ -2,9 +2,9 @@
 
 import { useRouter } from "next/navigation"
 import { useState, useTransition } from "react"
-import { loginUser } from "../lib/auth"
-import MainPanel from "./main-panel"
 import Link from "next/link"
+import MainPanel from "@/app/components/main-panel"
+import { loginUser } from "@/app/lib/registration"
 
 export default function LoginForm()
 {
