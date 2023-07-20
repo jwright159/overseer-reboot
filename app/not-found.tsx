@@ -2,7 +2,7 @@ import "./globals.css"
 import MainPanel from "./components/main-panel"
 import { headers } from "next/headers"
 import RootLayout from "./layout"
-import { GameLayout } from "./(game)/layout"
+import GameLayout from "./(menu)/layout"
 
 export default function NotFound()
 {

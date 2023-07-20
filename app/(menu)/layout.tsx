@@ -1,15 +1,25 @@
 import { ReactNode } from "react"
 import { getUser } from "../lib/auth"
-import { GameLayout } from "../(game)/layout"
+import ClientContextProvider from "../components/clientContextProvider"
+import SBURBHeaderForPlayer from "../components/sburb-header-for-player"
+import SBURBHeaderLite from "../components/sburb-header-lite"
 
-export default async function GameLoginLayout({
+export default async function GameLayout({
 	children,
 }: {
 	children: ReactNode,
 }) {
-	return (
-		<GameLayout>
+	const user = await getUser()
+	
+	return (user ?
+		<ClientContextProvider power={user.power}>
+			<SBURBHeaderForPlayer />
 			{children}
-		</GameLayout>
+		</ClientContextProvider>
+	:
+		<>
+			<SBURBHeaderLite />
+			{children}
+		</>
 	)
 }
