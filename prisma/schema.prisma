@@ -8,15 +8,17 @@ datasource db {
 }
 
 model User {
-	username String @id
+	id Int @id @default(autoincrement())
+	username String @unique
 	password String
 	characters Character[]
 }
 
 model Character {
-	user User @relation(fields: [username], references: [username])
-	username String
-	@@id([username, name], name: "identifier")
+	id Int @id @default(autoincrement())
+	user User @relation(fields: [userId], references: [id])
+	userId Int 
+	@@unique([name, userId])
 	
 	name String
 	power Float @default(0)
