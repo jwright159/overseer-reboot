@@ -3,10 +3,11 @@
 import MainPanel from "../../components/main-panel"
 import { changePower } from "../../lib/power"
 import { useContext, useTransition } from "react"
-import { PowerContext, SetPowerContext } from "../../lib/context"
+import { CharacterContext, PowerContext, SetPowerContext } from "../../lib/context"
 
 export default function Overview()
 {
+	const character = useContext(CharacterContext)!
 	const power = useContext(PowerContext)
 	const setPower = useContext(SetPowerContext)
 	const [isPending, startTransition] = useTransition()
@@ -16,7 +17,7 @@ export default function Overview()
 			<form onSubmit={(event) => {
 				event.preventDefault()
 				const power = parseFloat(event.currentTarget.power.value)
-				startTransition(() => changePower(power).then(power => setPower(power)))
+				startTransition(() => changePower(character, power).then(power => setPower(power)))
 			}}>
 				Current Power: {power}
 				<div>

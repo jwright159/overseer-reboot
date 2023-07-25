@@ -3,7 +3,7 @@
 import Link from 'next/link'
 import styles from './sburb-header.module.css'
 import { useRouter } from 'next/navigation'
-import { unsetUser } from '../lib/auth'
+import { unsetCharacter } from '../lib/auth'
 import { useTransition } from 'react'
 import HeaderProgressBar from './header-progress-bar'
 
@@ -163,7 +163,7 @@ export default function SBURBHeader({
 				{symbol !== undefined && <div className={styles.avatar}><img src={symbol} /></div>}
 				{displayClasspect !== undefined && <div className={styles.classpect}><p>{displayClasspect}</p></div>}
 				{name !== undefined && <div className={[styles.statBox, styles.characterName].join(" ")}><p>{name}</p></div>}
-				{isLoggedIn && <button className={styles.characterSwitch} onClick={() => startLogoutTransition(() => unsetUser().then(() => router.refresh()))} disabled={isLogoutPending}></button>}
+				{isLoggedIn && <button className={styles.characterSwitch} onClick={() => startLogoutTransition(() => unsetCharacter().then(() => router.refresh()))} disabled={isLogoutPending}></button>}
 				{echeladderRung !== undefined && <div className={[styles.statBox, styles.echeladder].join(" ")}><Link href="/abilities"><img src="/images/header/echeladder.png"/><p>{echeladderRung}</p></Link></div>}
 				{strifePower !== undefined && <div className={[styles.statBox, styles.powerlevel].join(" ")}><Link href="/portfolio"><img src="/images/header/powerlevel.png"/><p>{strifePower}</p></Link></div>}
 

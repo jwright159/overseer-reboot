@@ -1,6 +1,7 @@
 "use server"
 
-import { setUser } from "./auth"
+import { User } from "@prisma/client"
+import { setCharacter, setUser } from "./auth"
 import prisma from "./prisma"
 import bcrypt from "bcrypt"
 
@@ -17,6 +18,8 @@ export async function loginUser(username: string, password: string)
 
 export async function registerUser(username: string, password: string)
 {
+	if (!username) throw new Error("Username cannot be empty")
+
 	if (password.length < 8) throw new Error("Password must be at least 8 characters")
 
 	const existingUser = await prisma.user.findUnique({ where: { username } })
@@ -31,4 +34,27 @@ export async function registerUser(username: string, password: string)
 	if (!user) throw new Error("User could not be created")
 
 	await setUser(user)
+}
+
+export async function loginCharacter(characterId: number)
+{
+	if (isNaN(characterId)) throw new Error("Must select a character")
+
+	const character = await prisma.character.findUnique({ where: { id: characterId } })
+	if (!character) throw new Error("No character with that ID")
+	
+	await setCharacter(character)
+}
+
+export async function registerCharacter(user: User, name: string)
+{
+	if (!name) throw new Error("Name cannot be empty")
+
+	const character = await prisma.character.create({ data: {
+		userId: user.id,
+		name,
+	}})
+	if (!character) throw new Error("Character could not be created")
+
+	await setCharacter(character)
 }

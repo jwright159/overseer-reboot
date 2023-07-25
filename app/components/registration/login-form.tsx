@@ -2,10 +2,9 @@
 
 import { useRouter } from "next/navigation"
 import { useState, useTransition } from "react"
-import { registerUser } from "../../lib/registration"
-import MainPanel from "../../components/main-panel"
+import { loginUser } from "@/app/lib/registration"
 
-export default function Register()
+export default function LoginForm()
 {
 	const router = useRouter()
 
@@ -13,7 +12,7 @@ export default function Register()
 	const [isPending, startTransition] = useTransition()
 
 	return (
-		<MainPanel title="Register">
+		<>
 			<form onSubmit={event => {
 				event.preventDefault()
 				setErrorText("")
@@ -25,7 +24,7 @@ export default function Register()
 				{
 					try
 					{
-						await registerUser(username, password)
+						await loginUser(username, password)
 						router.refresh()
 					}
 					catch (error)
@@ -37,10 +36,10 @@ export default function Register()
 				<p><label htmlFor="username">Username:</label> <input id="username" name="username" disabled={isPending}/></p>
 				<p><label htmlFor="password">Password:</label> <input type="password" id="password" name="password" disabled={isPending}/></p>
 
-				<input type="submit" value="Register" disabled={isPending}/>
-
-				<p style={{ color: "red" }}>{errorText}</p>
+				<input type="submit" value="Login" disabled={isPending}/>
 			</form>
-		</MainPanel>
+			
+			<p style={{ color: "red" }}>{errorText}</p>
+		</>
 	)
 }

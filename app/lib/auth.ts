@@ -3,16 +3,16 @@
 import { sealData, unsealData } from "iron-session"
 import { cookies } from "next/headers"
 import prisma from "./prisma"
-import { User } from "@prisma/client"
+import { Character, User } from "@prisma/client"
 
 const cookieName = "OVERSEER_SESSION"
-const cookiePassword = process.env.SESSION_PASSWORD as string // https://1password.com/password-generator/
+const cookiePassword = process.env.SESSION_PASSWORD as string // 32 character password from https://1password.com/password-generator/
 
 interface CookieData
 {
-	username?: string,
+	userId?: number,
 	password?: string,
-	characterName?: string,
+	characterId?: number,
 }
 
 async function sealCookie(data: CookieData)
@@ -40,12 +40,12 @@ export async function getUser()
 	const cookieData = await unsealCookie()
 	if (!cookieData) return null
 
-	const { username, password } = cookieData
+	const { userId, password } = cookieData
 
-	if (!username || typeof username !== "string") return null
+	if (!userId || typeof userId !== "number") return null
 	if (!password || typeof password !== "string") return null
 
-	const user = await prisma.user.findUnique({ where: { username, password } })
+	const user = await prisma.user.findUnique({ where: { id: userId, password }, include: { characters: true } })
 
 	return user
 }
@@ -53,7 +53,7 @@ export async function getUser()
 export async function setUser(user: User)
 {
 	await sealCookie({
-		username: user.username,
+		userId: user.id,
 		password: user.password,
 	})
 }
@@ -61,7 +61,39 @@ export async function setUser(user: User)
 export async function unsetUser()
 {
 	await sealCookie({
-		username: undefined,
+		userId: undefined,
 		password: undefined,
+	})
+}
+
+export async function getCharacter(user: User | null)
+{
+	if (!user) return null
+
+	const cookieData = await unsealCookie()
+	if (!cookieData) return null
+
+	const { characterId } = cookieData
+
+	if (!characterId || typeof characterId !== "number") return null
+
+	const character = await prisma.character.findUnique({ where: { id: characterId } })
+
+	if (!character || character.userId != user.id) return null
+
+	return character
+}
+
+export async function setCharacter(character: Character)
+{
+	await sealCookie({
+		characterId: character.id,
+	})
+}
+
+export async function unsetCharacter()
+{
+	await sealCookie({
+		characterId: undefined,
 	})
 }
