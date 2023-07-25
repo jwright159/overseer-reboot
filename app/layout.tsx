@@ -1,6 +1,7 @@
 import { ReactNode } from 'react'
 import './globals.css'
 import type { Metadata } from 'next'
+import ReferrerContextProvider from "@/app/referrer-context-provider"
 
 export const metadata: Metadata = {
 	title: 'Overseer Reboot',
@@ -16,7 +17,9 @@ export default async function RootLayout({
 	return (
 		<html lang="en">
 			<body>
-				{children}
+				<ReferrerContextProvider>
+					{children}
+				</ReferrerContextProvider>
 			</body>
 		</html>
 	)

@@ -3,7 +3,7 @@
 import { useRouter } from "next/navigation"
 import { useContext, useState, useTransition } from "react"
 import { registerCharacter } from "@/app/lib/registration"
-import { UserContext } from "@/app/lib/context"
+import { ReferrerContext, UserContext } from "@/app/lib/context"
 
 export default function RegisterCharacter()
 {
@@ -11,6 +11,8 @@ export default function RegisterCharacter()
 
 	const [errorText, setErrorText] = useState("")
 	const [isPending, startTransition] = useTransition()
+
+	const referrer = useContext(ReferrerContext)
 
 	const user = useContext(UserContext)!
 
@@ -26,7 +28,7 @@ export default function RegisterCharacter()
 				try
 				{
 					await registerCharacter(user, characterName)
-					router.back()
+					router.push(referrer)
 				}
 				catch (error)
 				{

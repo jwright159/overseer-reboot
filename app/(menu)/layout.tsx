@@ -2,7 +2,7 @@ import { ReactNode } from "react"
 import ClientGameContextProvider from "@/app/components/client-game-context-provider"
 import SBURBHeaderForPlayer from "@/app/components/sburb-header-for-player"
 import SBURBHeaderLite from "@/app/components/sburb-header-lite"
-import { getCharacter, getUser } from "@/app/lib/auth"
+import { getCharacter, getUser } from "@/app/lib/cookies"
 import ClientMenuContextProvider from "@/app/components/client-menu-context-provider"
 
 export default async function GameLayout({

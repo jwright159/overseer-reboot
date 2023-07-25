@@ -1,6 +1,6 @@
 import { ReactNode } from "react"
 import GameLayout from "@/app/(menu)/layout"
-import LoginSwitch from "@/app/components/registration/login-switch"
+import LoginRedirector from "./login-redirector"
 
 export default async function GameLoginLayout({
 	children,
@@ -10,9 +10,9 @@ export default async function GameLoginLayout({
 {
 	return (
 		<GameLayout>
-			<LoginSwitch>
+			<LoginRedirector>
 				{children}
-			</LoginSwitch>
+			</LoginRedirector>
 		</GameLayout>
 	)
 }

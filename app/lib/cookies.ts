@@ -35,6 +35,7 @@ async function unsealCookie(): Promise<CookieData>
 	return cookieData
 }
 
+
 export async function getUser()
 {
 	const cookieData = await unsealCookie()
@@ -65,6 +66,7 @@ export async function unsetUser()
 		password: undefined,
 	})
 }
+
 
 export async function getCharacter(user: User | null)
 {

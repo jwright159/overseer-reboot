@@ -1,6 +1,8 @@
 import { Character, User } from "@prisma/client"
 import { createContext } from "react"
 
+export const ReferrerContext = createContext("")
+
 export const PowerContext = createContext(0)
 export const SetPowerContext = createContext((power: number) => {})
 

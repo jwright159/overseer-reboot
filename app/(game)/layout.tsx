@@ -1,21 +1,18 @@
 import { ReactNode } from "react"
-import GameLayout from "@/app/(menu)/layout"
-import LoginSwitch from "@/app/components/registration/login-switch"
-import LoginCharacterSwitch from "@/app/components/registration/login-character-switch"
+import GameLoginLayout from "@/app/(logged in menu)/layout"
+import LoginCharacterRedirector from "@/app/(game)/login-character-redirector"
 
-export default async function GameLoginLayout({
+export default async function GameCharacterLoginLayout({
 	children,
 }: {
 	children: ReactNode,
 })
 {
 	return (
-		<GameLayout>
-			<LoginSwitch>
-				<LoginCharacterSwitch>
-					{children}
-				</LoginCharacterSwitch>
-			</LoginSwitch>
-		</GameLayout>
+		<GameLoginLayout>
+			<LoginCharacterRedirector>
+				{children}
+			</LoginCharacterRedirector>
+		</GameLoginLayout>
 	)
 }

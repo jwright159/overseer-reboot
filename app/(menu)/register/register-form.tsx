@@ -1,8 +1,9 @@
 "use client"
 
 import { useRouter } from "next/navigation"
-import { useState, useTransition } from "react"
+import { useContext, useState, useTransition } from "react"
 import { registerUser } from "@/app/lib/registration"
+import { ReferrerContext } from "@/app/lib/context"
 
 export default function RegisterForm()
 {
@@ -10,6 +11,8 @@ export default function RegisterForm()
 
 	const [errorText, setErrorText] = useState("")
 	const [isPending, startTransition] = useTransition()
+
+	const referrer = useContext(ReferrerContext)
 
 	return (
 		<form onSubmit={event => {
@@ -24,7 +27,7 @@ export default function RegisterForm()
 				try
 				{
 					await registerUser(username, password)
-					router.refresh()
+					router.push(referrer)
 				}
 				catch (error)
 				{

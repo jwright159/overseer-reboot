@@ -1,7 +1,7 @@
 "use server"
 
 import { User } from "@prisma/client"
-import { setCharacter, setUser } from "./auth"
+import { setCharacter, setUser } from "./cookies"
 import prisma from "./prisma"
 import bcrypt from "bcrypt"
 
