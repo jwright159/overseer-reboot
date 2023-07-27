@@ -7,6 +7,15 @@ datasource db {
 	url      = env("DATABASE_URL")
 }
 
+model Session {
+	id Int @id @default(autoincrement())
+	name String
+	characters Character[] @relation("session")
+
+	admin Character @relation("admin", fields: [adminId], references: [id])
+	adminId Int @unique
+}
+
 model User {
 	id Int @id @default(autoincrement())
 	username String @unique
@@ -16,10 +25,61 @@ model User {
 
 model Character {
 	id Int @id @default(autoincrement())
-	user User @relation(fields: [userId], references: [id])
-	userId Int 
-	@@unique([name, userId], name: "identifier")
-	
+	user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+	userId Int
+
+	session Session @relation("session", fields: [sessionId], references: [id], onDelete: Cascade)
+	sessionId Int
+	admin Session? @relation("admin")
+
+	entity Entity @relation("player", fields: [entityId], references: [id], onDelete: Cascade)
+	entityId Int @unique
+
+	ownedEntities Entity[] @relation("owningCharacter")
+
+	ownedStrifes Strife[]
+
+	ledTeams Team[]
+}
+
+model Entity {
+	id Int @id @default(autoincrement())
+
+	character Character? @relation("player")
+
+	owningCharacter Character @relation("owningCharacter", fields: [owningCharacterId], references: [id], onDelete: Cascade)
+	owningCharacterId Int
+
+	owningStrife Strife? @relation("owningStrife", fields: [owningStrifeId], references: [id], onDelete: Cascade)
+	owningStrifeId Int?
+
+	strife Strife? @relation("strife", fields: [strifeId], references: [id])
+	strifeId Int?
+	team Team @relation(fields: [teamId], references: [id])
+	teamId Int
+
 	name String
 	power Float @default(0)
+}
+
+model Strife {
+	id Int @id @default(autoincrement())
+
+	entities Entity[] @relation("strife")
+
+	ownedEntities Entity[] @relation("owningStrife")
+
+	owningCharacter Character @relation(fields: [owningCharacterId], references: [id], onDelete: Cascade)
+	owningCharacterId Int
+}
+
+model Team {
+	id Int @id @default(autoincrement())
+
+	name String
+
+	leader Character @relation(fields: [leaderId], references: [id], onDelete: Cascade)
+	leaderId Int
+
+	entities Entity[]
 }

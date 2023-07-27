@@ -22,7 +22,7 @@ export default function Overview()
 			<form onSubmit={(event) => {
 				event.preventDefault()
 				const power = parseFloat(event.currentTarget.power.value)
-				startTransition(() => changePower(character, power).then(power => setPower(power)))
+				startTransition(() => changePower(character, power).then(setPower))
 			}}>
 				Current Power: {power}
 				<div>

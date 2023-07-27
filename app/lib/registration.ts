@@ -50,9 +50,16 @@ export async function registerCharacter(user: User, name: string)
 {
 	if (!name) throw new Error("Name cannot be empty")
 
+	const playerTeam = await getPlayerTeam()
+
 	const character = await prisma.character.create({ data: {
-		userId: user.id,
-		name,
+		user: { connect: { id: user.id } },
+		entity: {
+			create: {
+				name,
+				team: { connect: { id: playerTeam.id } },
+			}
+		}
 	}})
 	if (!character) throw new Error("Character could not be created")
 
@@ -63,4 +70,19 @@ export async function deleteCharacter(character: Character)
 {
 	const resCharacter = await prisma.character.delete({ where: { id: character.id } })
 	if (!resCharacter) throw new Error("Character could not be deleted")
+}
+
+export async function getPlayerTeam()
+{
+	let team = await prisma.team.findUnique({ where: { id: 1 }})
+	if (!team)
+	{
+		team = await prisma.team.create({ data: {
+			id: 1,
+			name: "Players",
+		}})
+		if (!team) throw new Error("Player team could not be found or created")
+	}
+	
+	return team
 }
