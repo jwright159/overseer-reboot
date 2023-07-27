@@ -1,6 +1,6 @@
 "use server"
 
-import { User } from "@prisma/client"
+import { Character, User } from "@prisma/client"
 import { setCharacter, setUser } from "./cookies"
 import prisma from "./prisma"
 import bcrypt from "bcrypt"
@@ -36,11 +36,11 @@ export async function registerUser(username: string, password: string)
 	await setUser(user)
 }
 
-export async function loginCharacter(characterId: number)
+export async function loginCharacter(id: number)
 {
-	if (isNaN(characterId)) throw new Error("Must select a character")
+	if (isNaN(id)) throw new Error("Must select a character")
 
-	const character = await prisma.character.findUnique({ where: { id: characterId } })
+	const character = await prisma.character.findUnique({ where: { id } })
 	if (!character) throw new Error("No character with that ID")
 	
 	await setCharacter(character)
@@ -57,4 +57,10 @@ export async function registerCharacter(user: User, name: string)
 	if (!character) throw new Error("Character could not be created")
 
 	await setCharacter(character)
+}
+
+export async function deleteCharacter(character: Character)
+{
+	const resCharacter = await prisma.character.delete({ where: { id: character.id } })
+	if (!resCharacter) throw new Error("Character could not be deleted")
 }
