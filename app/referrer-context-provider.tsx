@@ -1,6 +1,6 @@
 "use client"
 
-import { Dispatch, ReactNode, SetStateAction, useCallback, useEffect, useState } from "react"
+import { Dispatch, ReactNode, SetStateAction, useEffect, useState } from "react"
 import { ReferrerContext } from "@/lib/context"
 import { usePathname } from "next/navigation"
 
