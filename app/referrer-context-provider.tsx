@@ -34,7 +34,8 @@ function ReferrerContextProviderProvider({
 		pathname === "/login" ||
 		pathname === "/register" ||
 		pathname === "/select-character" ||
-		pathname === "/register-character"
+		pathname === "/register-character" ||
+		pathname === "/register-session"
 	))
 		setReferrer(pathname)
 	

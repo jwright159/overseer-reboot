@@ -1,9 +1,9 @@
 "use server"
 
-import { Character } from "@prisma/client"
+import { Entity } from "@prisma/client"
 import prisma from "./prisma"
 
-export async function changePower(charcter: Character, power: number)
+export async function changePower(entity: Entity, power: number)
 {
-	return (await prisma.character.update({ where: { id: charcter.id }, data: { power } })).power
+	return (await prisma.entity.update({ where: { id: entity.id }, data: { power } })).power
 }

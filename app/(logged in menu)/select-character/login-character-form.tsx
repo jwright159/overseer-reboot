@@ -36,7 +36,7 @@ export default function LoginCharacterForm()
 				})
 			}}>
 				{user.characters.map(character => (
-					<p key={character.id}><input id={character.id.toString()} name="characterId" type="radio" value={character.id} disabled={isPending}/> <label htmlFor={character.id.toString()}>{character.entity.name}</label></p>
+					<p key={character.id}><input id={character.id.toString()} name="characterId" type="radio" value={character.id} disabled={isPending}/> <label htmlFor={character.id.toString()}>{character.entity!.name}</label></p>
 				))}
 
 				<input type="submit" value="Select" disabled={isPending}/>

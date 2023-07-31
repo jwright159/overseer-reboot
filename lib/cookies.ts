@@ -46,7 +46,17 @@ export async function getUser()
 	if (!userId || typeof userId !== "number") return null
 	if (!password || typeof password !== "string") return null
 
-	const user = await prisma.user.findUnique({ where: { id: userId, password }, include: { characters: true } })
+	const user = await prisma.user.findUnique({
+		where: {
+			id: userId,
+			password
+		},
+		include: {
+			characters: { include: {
+				entity: true,
+			} }
+		}
+	})
 
 	return user
 }
@@ -79,7 +89,14 @@ export async function getCharacter(user: User | null)
 
 	if (!characterId || typeof characterId !== "number") return null
 
-	const character = await prisma.character.findUnique({ where: { id: characterId } })
+	const character = await prisma.character.findUnique({
+		where: {
+			id: characterId
+		},
+		include: {
+			entity: true,
+		},
+	})
 
 	if (!character || character.userId != user.id) return null
 

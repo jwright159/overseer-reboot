@@ -13,7 +13,7 @@ model Session {
 	characters Character[] @relation("session")
 
 	admin User @relation(fields: [adminId], references: [id])
-	adminId Int @unique
+	adminId Int
 }
 
 model User {

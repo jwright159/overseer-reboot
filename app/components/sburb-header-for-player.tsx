@@ -2,18 +2,18 @@
 
 import { useContext } from 'react'
 import SBURBHeader from './sburb-header'
-import { CharacterContext, PowerContext } from '../../lib/context'
+import { EntityContext, PowerContext } from '@/lib/context'
 
 export default function SBURBHeaderForPlayer()
 {
-	const character = useContext(CharacterContext)
+	const entity = useContext(EntityContext)!
 	const power = useContext(PowerContext)
 
 	return (
 		<SBURBHeader
 			isLoggedIn
 
-			name={character?.name}
+			name={entity.name}
 			symbol="/images/symbols/aspect_light.png"
 			boondollars={0}
 			aspect="light"

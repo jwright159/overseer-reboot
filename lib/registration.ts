@@ -100,6 +100,9 @@ export async function registerSession(user: User, name: string)
 {
 	if (!name) return "Name cannot be empty"
 
+	const existingSession = await prisma.session.findUnique({ where: { name } })
+	if (existingSession) return "Name taken"
+
 	const session = await prisma.session.create({ data: {
 		admin: { connect: { id: user.id } },
 		name,

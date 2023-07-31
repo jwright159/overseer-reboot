@@ -27,11 +27,14 @@ export default async function GameLayout({
 		</ClientMenuContextProvider>
 	</>
 
+	const entity = character.entity!
+
 	return (
 		<ClientGameContextProvider
 			user={user}
 			character={character}
-			power={character.power}
+			entity={entity}
+			power={entity.power}
 		>
 			<SBURBHeaderForPlayer />
 			{children}
