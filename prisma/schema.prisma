@@ -22,7 +22,7 @@ model User {
 	password String
 
 	characters Character[]
-	
+
 	adminSessions Session[]
 }
 
@@ -34,8 +34,8 @@ model Character {
 	session Session @relation("session", fields: [sessionId], references: [id], onDelete: Cascade)
 	sessionId Int
 
-	entity Entity @relation("player", fields: [entityId], references: [id], onDelete: Cascade)
-	entityId Int @unique
+	entity Entity? @relation("player", fields: [entityId], references: [id], onDelete: Cascade)
+	entityId Int? @unique
 
 	ownedEntities Entity[] @relation("owningCharacter")
 
@@ -49,8 +49,8 @@ model Entity {
 
 	character Character? @relation("player")
 
-	owningCharacter Character? @relation("owningCharacter", fields: [owningCharacterId], references: [id], onDelete: Cascade)
-	owningCharacterId Int?
+	owningCharacter Character @relation("owningCharacter", fields: [owningCharacterId], references: [id], onDelete: Cascade)
+	owningCharacterId Int
 
 	owningStrife Strife? @relation("owningStrife", fields: [owningStrifeId], references: [id], onDelete: Cascade)
 	owningStrifeId Int?

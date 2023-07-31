@@ -56,19 +56,19 @@ export async function registerCharacter(user: User, session: Session, name: stri
 	const playerTeam = await getPlayerTeam()
 	if (typeof playerTeam === "string") return playerTeam
 
-	const entity = await prisma.entity.create({ data: {
-		name,
-		team: { connect: { id: playerTeam.id } },
-	}})
-	if (!entity) return "Character entity could not be created"
-
 	const character = await prisma.character.create({ data: {
 		user: { connect: { id: user.id } },
 		session: { connect: { id: session.id } },
-		entity: { connect: { id: entity.id } },
-		ownedEntities: { connect: { id: entity.id } },
 	}})
 	if (!character) return "Character could not be created"
+
+	const entity = await prisma.entity.create({ data: {
+		name,
+		team: { connect: { id: playerTeam.id } },
+		character: { connect: { id: character.id } },
+		owningCharacter: { connect: { id: character.id } },
+	}})
+	if (!entity) return "Character entity could not be created"
 
 	await setCharacter(character)
 	return character
