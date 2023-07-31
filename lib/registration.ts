@@ -1,6 +1,6 @@
 "use server"
 
-import { Character, User } from "@prisma/client"
+import { Character, Session, User } from "@prisma/client"
 import { setCharacter, setUser } from "./cookies"
 import prisma from "./prisma"
 import bcrypt from "bcrypt"
@@ -8,22 +8,23 @@ import bcrypt from "bcrypt"
 export async function loginUser(username: string, password: string)
 {
 	const user = await prisma.user.findUnique({ where: { username } })
-	if (!user) throw new Error("Wrong username or password")
+	if (!user) return "Wrong username or password"
 
 	const passwordCorrect = await bcrypt.compare(password, user.password)
-	if (!passwordCorrect) throw new Error("Wrong username or password")
+	if (!passwordCorrect) return "Wrong username or password"
 	
 	await setUser(user)
+	return user
 }
 
 export async function registerUser(username: string, password: string)
 {
-	if (!username) throw new Error("Username cannot be empty")
+	if (!username) return "Username cannot be empty"
 
-	if (password.length < 8) throw new Error("Password must be at least 8 characters")
+	if (password.length < 8) return "Password must be at least 8 characters"
 
 	const existingUser = await prisma.user.findUnique({ where: { username } })
-	if (existingUser) throw new Error("Username taken")
+	if (existingUser) return "Username taken"
 
 	const passwordHash = await bcrypt.hash(password, 10)
 
@@ -31,57 +32,92 @@ export async function registerUser(username: string, password: string)
 		username,
 		password: passwordHash,
 	}})
-	if (!user) throw new Error("User could not be created")
+	if (!user) return "User could not be created"
 
 	await setUser(user)
+	return user
 }
 
 export async function loginCharacter(id: number)
 {
-	if (isNaN(id)) throw new Error("Must select a character")
+	if (isNaN(id)) return "Must select a character"
 
 	const character = await prisma.character.findUnique({ where: { id } })
-	if (!character) throw new Error("No character with that ID")
+	if (!character) return "No character with that ID"
 	
 	await setCharacter(character)
+	return character
 }
 
-export async function registerCharacter(user: User, name: string)
+export async function registerCharacter(user: User, session: Session, name: string)
 {
-	if (!name) throw new Error("Name cannot be empty")
+	if (!name) return "Name cannot be empty"
 
 	const playerTeam = await getPlayerTeam()
+	if (typeof playerTeam === "string") return playerTeam
+
+	const entity = await prisma.entity.create({ data: {
+		name,
+		team: { connect: { id: playerTeam.id } },
+	}})
+	if (!entity) return "Character entity could not be created"
 
 	const character = await prisma.character.create({ data: {
 		user: { connect: { id: user.id } },
-		entity: {
-			create: {
-				name,
-				team: { connect: { id: playerTeam.id } },
-			}
-		}
+		session: { connect: { id: session.id } },
+		entity: { connect: { id: entity.id } },
+		ownedEntities: { connect: { id: entity.id } },
 	}})
-	if (!character) throw new Error("Character could not be created")
+	if (!character) return "Character could not be created"
 
 	await setCharacter(character)
+	return character
 }
 
 export async function deleteCharacter(character: Character)
 {
 	const resCharacter = await prisma.character.delete({ where: { id: character.id } })
-	if (!resCharacter) throw new Error("Character could not be deleted")
+	if (!resCharacter) return "Character could not be deleted"
+
+	return resCharacter
+}
+
+export async function getSession(name: string)
+{
+	if (!name) return "Name cannot be empty"
+
+	const session = await prisma.session.findUnique({
+		where: {
+			name,
+		},
+	})
+	if (!session) return "No session with that name"
+
+	return session
+}
+
+export async function registerSession(user: User, name: string)
+{
+	if (!name) return "Name cannot be empty"
+
+	const session = await prisma.session.create({ data: {
+		admin: { connect: { id: user.id } },
+		name,
+	}})
+	if (!session) return "Session could not be created"
+
+	return session
 }
 
 export async function getPlayerTeam()
 {
-	let team = await prisma.team.findUnique({ where: { id: 1 }})
+	let team = await prisma.team.findUnique({ where: { name: "Players" }})
 	if (!team)
 	{
 		team = await prisma.team.create({ data: {
-			id: 1,
 			name: "Players",
 		}})
-		if (!team) throw new Error("Player team could not be found or created")
+		if (!team) return "Player team could not be found or created"
 	}
 	
 	return team

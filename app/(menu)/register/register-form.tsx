@@ -24,15 +24,14 @@ export default function RegisterForm()
 
 			startTransition(async () =>
 			{
-				try
+				const user = await registerUser(username, password)
+				if (typeof user === "string")
 				{
-					await registerUser(username, password)
-					router.push(referrer)
+					setErrorText(user)
+					return
 				}
-				catch (error)
-				{
-					setErrorText((error as Error).message)
-				}
+
+				router.push(referrer)
 			})
 		}}>
 			<p><label htmlFor="username">Username:</label> <input id="username" name="username" disabled={isPending}/></p>

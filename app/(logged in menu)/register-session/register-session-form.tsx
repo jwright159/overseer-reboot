@@ -2,11 +2,10 @@
 
 import { useRouter } from "next/navigation"
 import { useContext, useState, useTransition } from "react"
-import { getSession, registerCharacter } from "@/lib/registration"
+import { registerSession } from "@/lib/registration"
 import { ReferrerContext, UserContext } from "@/lib/context"
-import Link from "next/link"
 
-export default function RegisterCharacterForm()
+export default function RegisterSessionForm()
 {
 	const router = useRouter()
 
@@ -23,30 +22,20 @@ export default function RegisterCharacterForm()
 			setErrorText("")
 
 			const sessionName = `${event.currentTarget.sessionName.value}`
-			const characterName = `${event.currentTarget.characterName.value}`
 
 			startTransition(async () =>
 			{
-				const session = await getSession(sessionName)
+				const session = await registerSession(user, sessionName)
 				if (typeof session === "string")
 				{
 					setErrorText(session)
 					return
 				}
 
-				const character = await registerCharacter(user, session, characterName)
-				if (typeof character === "string")
-				{
-					setErrorText(character)
-					return
-				}
-				
 				router.push(referrer)
 			})
 		}}>
-			<p><label htmlFor="sessionName">Existing session name:</label> <input id="sessionName" name="sessionName" disabled={isPending}/> or <Link href="/register-session">create a new session</Link></p>
-
-			<p><label htmlFor="characterName">Name:</label> <input id="characterName" name="characterName" disabled={isPending}/></p>
+			<p><label htmlFor="sessionName">Name:</label> <input id="sessionName" name="sessionName" disabled={isPending}/></p>
 
 			<input type="submit" value="Register" disabled={isPending}/>
 

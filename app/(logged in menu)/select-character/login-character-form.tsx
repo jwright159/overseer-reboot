@@ -25,19 +25,18 @@ export default function LoginCharacterForm()
 
 				startTransition(async () =>
 				{
-					try
+					const character = await loginCharacter(characterId)
+					if (typeof character === "string")
 					{
-						await loginCharacter(characterId)
-						router.push(referrer)
+						setErrorText(character)
+						return
 					}
-					catch (error)
-					{
-						setErrorText((error as Error).message)
-					}
+
+					router.push(referrer)
 				})
 			}}>
 				{user.characters.map(character => (
-					<p key={character.id}><input id={character.id.toString()} name="characterId" type="radio" value={character.id} disabled={isPending}/> <label htmlFor={character.id.toString()}>{character.name}</label></p>
+					<p key={character.id}><input id={character.id.toString()} name="characterId" type="radio" value={character.id} disabled={isPending}/> <label htmlFor={character.id.toString()}>{character.entity.name}</label></p>
 				))}
 
 				<input type="submit" value="Select" disabled={isPending}/>

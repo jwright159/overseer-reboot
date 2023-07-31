@@ -9,10 +9,10 @@ datasource db {
 
 model Session {
 	id Int @id @default(autoincrement())
-	name String
+	name String @unique
 	characters Character[] @relation("session")
 
-	admin Character @relation("admin", fields: [adminId], references: [id])
+	admin User @relation(fields: [adminId], references: [id])
 	adminId Int @unique
 }
 
@@ -20,7 +20,10 @@ model User {
 	id Int @id @default(autoincrement())
 	username String @unique
 	password String
+
 	characters Character[]
+	
+	adminSessions Session[]
 }
 
 model Character {
@@ -30,7 +33,6 @@ model Character {
 
 	session Session @relation("session", fields: [sessionId], references: [id], onDelete: Cascade)
 	sessionId Int
-	admin Session? @relation("admin")
 
 	entity Entity @relation("player", fields: [entityId], references: [id], onDelete: Cascade)
 	entityId Int @unique
@@ -47,8 +49,8 @@ model Entity {
 
 	character Character? @relation("player")
 
-	owningCharacter Character @relation("owningCharacter", fields: [owningCharacterId], references: [id], onDelete: Cascade)
-	owningCharacterId Int
+	owningCharacter Character? @relation("owningCharacter", fields: [owningCharacterId], references: [id], onDelete: Cascade)
+	owningCharacterId Int?
 
 	owningStrife Strife? @relation("owningStrife", fields: [owningStrifeId], references: [id], onDelete: Cascade)
 	owningStrifeId Int?
@@ -76,10 +78,10 @@ model Strife {
 model Team {
 	id Int @id @default(autoincrement())
 
-	name String
+	name String @unique
 
-	leader Character @relation(fields: [leaderId], references: [id], onDelete: Cascade)
-	leaderId Int
+	leader Character? @relation(fields: [leaderId], references: [id], onDelete: Cascade)
+	leaderId Int?
 
 	entities Entity[]
 }
