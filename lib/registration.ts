@@ -4,6 +4,7 @@ import { Character, Session, User } from "@prisma/client"
 import { setCharacter, setUser } from "./cookies"
 import prisma from "./prisma"
 import bcrypt from "bcrypt"
+import { getPlayerTeam } from "./team"
 
 export async function loginUser(username: string, password: string)
 {
@@ -32,7 +33,6 @@ export async function registerUser(username: string, password: string)
 		username,
 		password: passwordHash,
 	}})
-	if (!user) return "User could not be created"
 
 	await setUser(user)
 	return user
@@ -60,15 +60,13 @@ export async function registerCharacter(user: User, session: Session, name: stri
 		user: { connect: { id: user.id } },
 		session: { connect: { id: session.id } },
 	}})
-	if (!character) return "Character could not be created"
 
-	const entity = await prisma.entity.create({ data: {
+	await prisma.entity.create({ data: {
 		name,
 		team: { connect: { id: playerTeam.id } },
 		character: { connect: { id: character.id } },
 		owningCharacter: { connect: { id: character.id } },
 	}})
-	if (!entity) return "Character entity could not be created"
 
 	await setCharacter(character)
 	return character
@@ -77,7 +75,6 @@ export async function registerCharacter(user: User, session: Session, name: stri
 export async function deleteCharacter(character: Character)
 {
 	const resCharacter = await prisma.character.delete({ where: { id: character.id } })
-	if (!resCharacter) return "Character could not be deleted"
 
 	return resCharacter
 }
@@ -107,21 +104,6 @@ export async function registerSession(user: User, name: string)
 		admin: { connect: { id: user.id } },
 		name,
 	}})
-	if (!session) return "Session could not be created"
 
 	return session
-}
-
-export async function getPlayerTeam()
-{
-	let team = await prisma.team.findUnique({ where: { name: "Players" }})
-	if (!team)
-	{
-		team = await prisma.team.create({ data: {
-			name: "Players",
-		}})
-		if (!team) return "Player team could not be found or created"
-	}
-	
-	return team
 }

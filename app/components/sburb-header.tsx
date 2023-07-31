@@ -58,7 +58,7 @@ export default function SBURBHeader({
 			icon: "rancorous.png",
 			color: "#FFA812",
 			links: [
-				{ text: "Strife!", link: "/strife", disabled: true },
+				{ text: "Strife!", link: "/strife" },
 				{ text: "Portfolio", link: "/portfolio", disabled: true },
 				{ text: "Abilities", link: "/abilities", disabled: true },
 				{ text: "Aspect Patterns", link: "/aspect-patterns", disabled: true },

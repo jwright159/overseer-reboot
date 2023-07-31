@@ -18,7 +18,8 @@ export default function RegisterCharacterForm()
 	const user = useContext(UserContext)!
 
 	return (
-		<form onSubmit={event => {
+		<form onSubmit={event =>
+		{
 			event.preventDefault()
 			setErrorText("")
 
