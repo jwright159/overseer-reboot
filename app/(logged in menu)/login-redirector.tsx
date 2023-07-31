@@ -2,7 +2,7 @@
 
 import { UserContext } from "@/lib/context"
 import { useRouter } from "next/navigation"
-import { ReactNode, useContext } from "react"
+import { ReactNode, useContext, useEffect } from "react"
 
 export default function LoginRedirector({
 	children
@@ -13,7 +13,11 @@ export default function LoginRedirector({
 	const router = useRouter()
 	const user = useContext(UserContext)
 
-	if (user) return <>{children}</>
+	useEffect(() => 
+	{
+		if (!user)
+			router.push("/login")
+	})
 
-	router.push("/login")
+	if (user) return children
 }
