@@ -2,7 +2,7 @@
 
 import { CharacterContext } from "@/lib/context"
 import { useRouter } from "next/navigation"
-import { ReactNode, useContext } from "react"
+import { ReactNode, useContext, useEffect } from "react"
 
 export default function LoginCharacterRedirector({
 	children
@@ -13,7 +13,11 @@ export default function LoginCharacterRedirector({
 	const router = useRouter()
 	const character = useContext(CharacterContext)
 
-	if (character) return <>{children}</>
+	useEffect(() => 
+	{
+		if (!character)
+			router.push("/select-character")
+	})
 
-	router.push("/select-character")
+	if (character) return <>{children}</>
 }
