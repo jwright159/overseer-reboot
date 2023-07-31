@@ -1,7 +1,7 @@
 "use client"
 
 import { Dispatch, ReactNode, SetStateAction, useState } from "react"
-import { ReferrerContext } from "@/app/lib/context"
+import { ReferrerContext } from "@/lib/context"
 import { usePathname } from "next/navigation"
 
 export default function ReferrerContextProvider({

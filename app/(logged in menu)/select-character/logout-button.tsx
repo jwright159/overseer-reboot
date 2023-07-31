@@ -1,6 +1,6 @@
 "use client"
 
-import { unsetUser } from "@/app/lib/cookies"
+import { unsetUser } from "@/lib/cookies"
 import { useRouter } from "next/navigation"
 import { useTransition } from "react"
 

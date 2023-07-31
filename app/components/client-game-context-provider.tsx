@@ -1,7 +1,7 @@
 "use client"
 
 import React, { ReactNode, useState } from "react"
-import { CharacterContext, PowerContext, SetPowerContext, UserContext } from "../lib/context"
+import { CharacterContext, PowerContext, SetPowerContext, UserContext } from "../../lib/context"
 import { User, Character } from "@prisma/client"
 
 export default function ClientGameContextProvider({

@@ -1,10 +1,10 @@
 "use client"
 
 import MainPanel from "../../components/main-panel"
-import { changePower } from "../../lib/power"
+import { changePower } from "../../../lib/power"
 import { useContext, useTransition } from "react"
-import { CharacterContext, PowerContext, SetPowerContext } from "../../lib/context"
-import { deleteCharacter } from "@/app/lib/registration"
+import { CharacterContext, PowerContext, SetPowerContext } from "../../../lib/context"
+import { deleteCharacter } from "@/lib/registration"
 import { useRouter } from "next/navigation"
 
 export default function Overview()

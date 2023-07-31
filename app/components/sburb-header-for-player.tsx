@@ -2,7 +2,7 @@
 
 import { useContext } from 'react'
 import SBURBHeader from './sburb-header'
-import { CharacterContext, PowerContext } from '../lib/context'
+import { CharacterContext, PowerContext } from '../../lib/context'
 
 export default function SBURBHeaderForPlayer()
 {

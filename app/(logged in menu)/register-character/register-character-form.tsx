@@ -2,8 +2,8 @@
 
 import { useRouter } from "next/navigation"
 import { useContext, useState, useTransition } from "react"
-import { registerCharacter } from "@/app/lib/registration"
-import { ReferrerContext, UserContext } from "@/app/lib/context"
+import { registerCharacter } from "@/lib/registration"
+import { ReferrerContext, UserContext } from "@/lib/context"
 
 export default function RegisterCharacter()
 {

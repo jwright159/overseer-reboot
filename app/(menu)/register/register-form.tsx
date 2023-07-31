@@ -2,8 +2,8 @@
 
 import { useRouter } from "next/navigation"
 import { useContext, useState, useTransition } from "react"
-import { registerUser } from "@/app/lib/registration"
-import { ReferrerContext } from "@/app/lib/context"
+import { registerUser } from "@/lib/registration"
+import { ReferrerContext } from "@/lib/context"
 
 export default function RegisterForm()
 {
