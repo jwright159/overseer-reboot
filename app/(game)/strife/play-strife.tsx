@@ -10,7 +10,7 @@ export default function PlayStrife()
 		<ul>
 			{strife.entities.map(entity => (
 				<li key={entity.id}>
-					{entity.name}
+					{entity.name} - {entity.power} power
 				</li>
 			))}
 		</ul>
