@@ -1,10 +1,10 @@
 "use client"
 
 import { useRouter } from "next/navigation"
-import { useContext, useState, useTransition } from "react"
+import { useState, useTransition } from "react"
 import { registerSession } from "@/lib/registration"
-import { UserContext } from "@/lib/context"
 import { useReferrer } from "@/lib/referrer"
+import { useUser } from "@/lib/context"
 
 export default function RegisterSessionForm()
 {
@@ -15,7 +15,7 @@ export default function RegisterSessionForm()
 
 	const referrer = useReferrer()
 
-	const user = useContext(UserContext)!
+	const user = useUser()
 
 	return (
 		<form onSubmit={event => {

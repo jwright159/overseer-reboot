@@ -1,11 +1,10 @@
 "use client"
 
-import { StrifeContext } from "@/lib/context"
-import { useContext } from "react"
+import { useStrife } from "@/lib/context"
 
 export default function PlayStrife()
 {
-	const strife = useContext(StrifeContext)!
+	const strife = useStrife()
 	
 	return (
 		<ul>

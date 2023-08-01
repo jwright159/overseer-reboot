@@ -1,20 +1,18 @@
 "use client"
 
-import { useContext, useTransition } from "react"
+import { useTransition } from "react"
 import { deleteCharacter } from "@/lib/registration"
 import { useRouter } from "next/navigation"
 import MainPanel from "@/app/components/main-panel"
-import { CharacterContext, EntityContext, PowerContext, SetPowerContext } from "@/lib/context"
-import { changePower } from "@/lib/power"
+import { useCharacter, usePower, useSetPower } from "@/lib/context"
 
 export default function Overview()
 {
 	const router = useRouter()
 
-	const character = useContext(CharacterContext)!
-	const entity = useContext(EntityContext)!
-	const power = useContext(PowerContext)
-	const setPower = useContext(SetPowerContext)
+	const character = useCharacter()
+	const power = usePower()
+	const setPower = useSetPower()
 
 	const [isPending, startTransition] = useTransition()
 	
@@ -23,7 +21,7 @@ export default function Overview()
 			<form onSubmit={(event) => {
 				event.preventDefault()
 				const power = parseFloat(event.currentTarget.power.value)
-				startTransition(() => changePower(entity, power).then(setPower))
+				startTransition(setPower(power))
 			}}>
 				Current Power: {power}
 				<div>

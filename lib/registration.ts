@@ -1,10 +1,10 @@
 "use server"
 
-import { Character, Session, User } from "@prisma/client"
 import { setCharacter, setUser } from "./cookies"
 import prisma from "./prisma"
 import bcrypt from "bcrypt"
 import { getPlayerTeam } from "./team"
+import { Character, Session, User } from "./context"
 
 export async function loginUser(username: string, password: string)
 {

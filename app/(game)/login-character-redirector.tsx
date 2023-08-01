@@ -1,8 +1,8 @@
 "use client"
 
-import { CharacterContext } from "@/lib/context"
+import { useNullableCharacter } from "@/lib/context"
 import { useRouter } from "next/navigation"
-import { ReactNode, useContext, useEffect } from "react"
+import { ReactNode, useEffect } from "react"
 
 export default function LoginCharacterRedirector({
 	children
@@ -11,7 +11,7 @@ export default function LoginCharacterRedirector({
 })
 {
 	const router = useRouter()
-	const character = useContext(CharacterContext)
+	const character = useNullableCharacter()
 
 	useEffect(() => 
 	{

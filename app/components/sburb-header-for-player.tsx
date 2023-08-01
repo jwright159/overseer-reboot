@@ -1,13 +1,12 @@
 "use client"
 
-import { useContext } from 'react'
 import SBURBHeader from './sburb-header'
-import { EntityContext, PowerContext } from '@/lib/context'
+import { useEntity, usePower } from '@/lib/context'
 
 export default function SBURBHeaderForPlayer()
 {
-	const entity = useContext(EntityContext)!
-	const power = useContext(PowerContext)
+	const entity = useEntity()
+	const power = usePower()
 
 	return (
 		<SBURBHeader

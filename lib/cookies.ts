@@ -3,7 +3,8 @@
 import { sealData, unsealData } from "iron-session"
 import { cookies } from "next/headers"
 import prisma from "./prisma"
-import { Character, User } from "@prisma/client"
+import { Character, User } from "./context"
+import { Character as CharacterModel, User as UserModel } from "@prisma/client"
 
 const cookieName = "OVERSEER_SESSION"
 const cookiePassword = process.env.SESSION_PASSWORD as string // 32 character password from https://1password.com/password-generator/
@@ -20,7 +21,7 @@ async function sealCookie(data: CookieData)
 	const cookie = await sealData({
 		...await unsealCookie(),
 		...data,
-	}, { password: cookiePassword })
+	}, {password: cookiePassword})
 	cookies().set(cookieName, cookie)
 }
 
@@ -29,14 +30,14 @@ async function unsealCookie(): Promise<CookieData>
 	const cookie = cookies().get(cookieName)
 	if (!cookie) return {}
 
-	const cookieData = await unsealData<CookieData>(cookie.value, { password: cookiePassword })
+	const cookieData = await unsealData<CookieData>(cookie.value, {password: cookiePassword})
 	if (!cookieData || typeof cookieData !== "object") return {}
 
 	return cookieData
 }
 
 
-export async function getUser()
+export async function getUser(): Promise<User | null>
 {
 	const cookieData = await unsealCookie()
 	if (!cookieData) return null
@@ -52,16 +53,23 @@ export async function getUser()
 			password
 		},
 		include: {
-			characters: { include: {
+			characters: {include: {
 				entity: true,
-			} }
+			}}
 		}
 	})
+	if (!user) return null
 
-	return user
+	return {
+		...user,
+		characters: user.characters.map(character => ({
+			...character,
+			entity: character.entity!,
+		}))
+	}
 }
 
-export async function setUser(user: User)
+export async function setUser(user: UserModel)
 {
 	await sealCookie({
 		userId: user.id,
@@ -78,7 +86,7 @@ export async function unsetUser()
 }
 
 
-export async function getCharacter(user: User | null)
+export async function getCharacter(user: UserModel | null): Promise<Character | null>
 {
 	if (!user) return null
 
@@ -100,10 +108,13 @@ export async function getCharacter(user: User | null)
 
 	if (!character || character.userId != user.id) return null
 
-	return character
+	return {
+		...character,
+		entity: character.entity!
+	}
 }
 
-export async function setCharacter(character: Character)
+export async function setCharacter(character: CharacterModel)
 {
 	await sealCookie({
 		characterId: character.id,

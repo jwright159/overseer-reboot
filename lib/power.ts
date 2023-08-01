@@ -1,6 +1,6 @@
 "use server"
 
-import { Entity } from "@prisma/client"
+import { Entity } from "./context"
 import prisma from "./prisma"
 
 export async function changePower(entity: Entity, power: number)

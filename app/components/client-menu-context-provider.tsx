@@ -1,20 +1,19 @@
 "use client"
 
 import React, { ReactNode } from "react"
-import { UserContext } from "../../lib/context"
-import { User, Character } from "@prisma/client"
+import { User, UserContextProvider } from "@/lib/context"
 
 export default function ClientMenuContextProvider({
 	children,
 	user,
 }: {
 	children: ReactNode,
-	user: User & { characters: Character[] },
+	user: User,
 })
 {
 	return (
-		<UserContext.Provider value={user}>
+		<UserContextProvider value={user}>
 			{children}
-		</UserContext.Provider>
+		</UserContextProvider>
 	)
 }

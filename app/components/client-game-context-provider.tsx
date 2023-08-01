@@ -1,8 +1,8 @@
 "use client"
 
-import React, { ReactNode, useState } from "react"
-import { CharacterContext, EntityContext, PowerContext, SetPowerContext, StrifeContext, UserContext } from "../../lib/context"
-import { User, Character, Entity, Strife } from "@prisma/client"
+import { ReactNode } from "react"
+import { Character, CharacterContextProvider, Entity, EntityContextProvider, PowerContextProvider, Strife, StrifeContextProvider, User, UserContextProvider } from "@/lib/context"
+import { changePower } from "@/lib/power"
 
 export default function ClientGameContextProvider({
 	children,
@@ -13,27 +13,24 @@ export default function ClientGameContextProvider({
 	power,
 }: {
 	children: ReactNode,
-	user: User & { characters: (Character & { entity: Entity | null })[] },
+	user: User,
 	character: Character,
 	entity: Entity,
-	strife: Strife & { entities: Entity[] },
+	strife: Strife,
 	power: number,
 })
 {
-	const [getPower, setPower] = useState(power)
 	return (
-		<UserContext.Provider value={user}>
-			<CharacterContext.Provider value={character}>
-				<EntityContext.Provider value={entity}>
-					<StrifeContext.Provider value={strife}>
-						<PowerContext.Provider value={getPower}>
-							<SetPowerContext.Provider value={setPower}>
-								{children}
-							</SetPowerContext.Provider>
-						</PowerContext.Provider>
-					</StrifeContext.Provider>
-				</EntityContext.Provider>
-			</CharacterContext.Provider>
-		</UserContext.Provider>
+		<UserContextProvider value={user}>
+			<CharacterContextProvider value={character}>
+				<EntityContextProvider value={entity}>
+					<StrifeContextProvider value={strife}>
+						<PowerContextProvider databaseValue={power} setDatabaseValue={(power) => changePower(entity, power)}>
+							{children}
+						</PowerContextProvider>
+					</StrifeContextProvider>
+				</EntityContextProvider>
+			</CharacterContextProvider>
+		</UserContextProvider>
 	)
 }

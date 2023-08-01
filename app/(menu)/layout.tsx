@@ -28,11 +28,9 @@ export default async function GameLayout({
 		</ClientMenuContextProvider>
 	</>
 
-	const entity = character.entity!
-
 	const strifeEntity = await prisma.entity.findUnique({
 		where: {
-			id: entity.id,
+			id: character.entity.id,
 		},
 		include: {
 			strife: { include: {
@@ -46,8 +44,8 @@ export default async function GameLayout({
 		<ClientGameContextProvider
 			user={user}
 			character={character}
-			entity={entity}
-			power={entity.power}
+			entity={character.entity}
+			power={character.entity.power}
 			strife={strife}
 		>
 			<SBURBHeaderForPlayer />

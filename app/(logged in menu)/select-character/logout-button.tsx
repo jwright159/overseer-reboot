@@ -10,5 +10,5 @@ export default function LogoutButton()
 
 	const [isPending, startTransition] = useTransition()
 
-	return <button onClick={() => startTransition(() => unsetUser().then(() => router.refresh()))} disabled={isPending}>Logout</button>
+	return <button onClick={() => startTransition(() => unsetUser().then(router.refresh))} disabled={isPending}>Logout</button>
 }

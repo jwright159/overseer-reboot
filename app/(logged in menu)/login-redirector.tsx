@@ -1,8 +1,8 @@
 "use client"
 
-import { UserContext } from "@/lib/context"
+import { useNullableUser } from "@/lib/context"
 import { useRouter } from "next/navigation"
-import { ReactNode, useContext, useEffect } from "react"
+import { ReactNode, useEffect } from "react"
 
 export default function LoginRedirector({
 	children
@@ -11,7 +11,7 @@ export default function LoginRedirector({
 })
 {
 	const router = useRouter()
-	const user = useContext(UserContext)
+	const user = useNullableUser()
 
 	useEffect(() => 
 	{
