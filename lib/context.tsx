@@ -12,7 +12,7 @@ import { Provider, ReactNode, createContext, useContext, useState } from "react"
 function createDatabaseValueContextExports<T>(defaultValue: T): [
 	() => T,
 	() => (value: T) => () => Promise<void>,
-	ReturnType<typeof createDatabaseValueContextProvider<T>>,
+	ReturnType<typeof WrappedDatabaseValueContextProvider<T>>,
 ]
 {
 	const TContext = createContext<T>(defaultValue)
@@ -21,15 +21,15 @@ function createDatabaseValueContextExports<T>(defaultValue: T): [
 	const SetTContext = createContext<(value: T) => () => Promise<void>>(() => async () => {})
 	const useSetT = () => useContext(SetTContext)
 
-	return [useT, useSetT, createDatabaseValueContextProvider<T>(TContext.Provider, SetTContext.Provider)]
+	return [useT, useSetT, WrappedDatabaseValueContextProvider<T>(TContext.Provider, SetTContext.Provider)]
 }
 
-function createDatabaseValueContextProvider<T>(
+function WrappedDatabaseValueContextProvider<T>(
 	ContextProvider: Provider<T>,
 	SetContextProvider: Provider<(value: T) => () => Promise<void>>,
 )
 {
-	return ({
+	function DatabaseValueContextProvider({
 		children,
 		databaseValue,
 		setDatabaseValue,
@@ -37,7 +37,7 @@ function createDatabaseValueContextProvider<T>(
 		children: ReactNode,
 		databaseValue: T,
 		setDatabaseValue: (value: T) => Promise<T>,
-	}) =>
+	})
 	{
 		const [getT, setT] = useState(databaseValue)
 		return (
@@ -48,6 +48,7 @@ function createDatabaseValueContextProvider<T>(
 			</ContextProvider>
 		)
 	}
+	return DatabaseValueContextProvider
 }
 
 function createDatabaseObjectContextExports<T>(): [
