@@ -3,7 +3,8 @@
 import { useRouter } from "next/navigation"
 import { useContext, useState, useTransition } from "react"
 import { registerSession } from "@/lib/registration"
-import { ReferrerContext, UserContext } from "@/lib/context"
+import { UserContext } from "@/lib/context"
+import { useReferrer } from "@/lib/referrer"
 
 export default function RegisterSessionForm()
 {
@@ -12,7 +13,7 @@ export default function RegisterSessionForm()
 	const [errorText, setErrorText] = useState("")
 	const [isPending, startTransition] = useTransition()
 
-	const referrer = useContext(ReferrerContext)
+	const referrer = useReferrer()
 
 	const user = useContext(UserContext)!
 

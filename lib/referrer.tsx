@@ -1,16 +1,20 @@
 "use client"
 
-import { Dispatch, ReactNode, SetStateAction, useEffect, useState } from "react"
-import { ReferrerContext } from "@/lib/context"
+import { Dispatch, ReactNode, SetStateAction, createContext, useContext, useEffect, useState } from "react"
 import { usePathname } from "next/navigation"
 
-export default function ReferrerContextProvider({
+const defaultReferrer = "/overview"
+
+const ReferrerContext = createContext(defaultReferrer)
+export const useReferrer = () => useContext(ReferrerContext)
+
+export function ReferrerContextProvider({
 	children,
 }: {
 	children: ReactNode,
 })
 {
-	const [referrer, setReferrer] = useState("/overview")
+	const [referrer, setReferrer] = useState(defaultReferrer)
 
 	return (
 		<>

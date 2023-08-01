@@ -1,9 +1,9 @@
 "use client"
 
 import { useRouter } from "next/navigation"
-import { useContext, useState, useTransition } from "react"
+import { useState, useTransition } from "react"
 import { loginUser } from "@/lib/registration"
-import { ReferrerContext } from "@/lib/context"
+import { useReferrer } from "@/lib/referrer"
 
 export default function LoginForm()
 {
@@ -12,7 +12,7 @@ export default function LoginForm()
 	const [errorText, setErrorText] = useState("")
 	const [isPending, startTransition] = useTransition()
 
-	const referrer = useContext(ReferrerContext)
+	const referrer = useReferrer()
 
 	return (
 		<form onSubmit={event => {

@@ -1,7 +1,7 @@
 import { ReactNode } from 'react'
 import './globals.css'
 import type { Metadata } from 'next'
-import ReferrerContextProvider from "@/app/referrer-context-provider"
+import { ReferrerContextProvider } from "@/lib/referrer"
 
 export const metadata: Metadata = {
 	title: 'Overseer Reboot',

@@ -3,8 +3,9 @@
 import { useRouter } from "next/navigation"
 import { useContext, useState, useTransition } from "react"
 import { getSession, registerCharacter } from "@/lib/registration"
-import { ReferrerContext, UserContext } from "@/lib/context"
+import { UserContext } from "@/lib/context"
 import Link from "next/link"
+import { useReferrer } from "@/lib/referrer"
 
 export default function RegisterCharacterForm()
 {
@@ -13,7 +14,7 @@ export default function RegisterCharacterForm()
 	const [errorText, setErrorText] = useState("")
 	const [isPending, startTransition] = useTransition()
 
-	const referrer = useContext(ReferrerContext)
+	const referrer = useReferrer()
 
 	const user = useContext(UserContext)!
 
