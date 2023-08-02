@@ -1,10 +1,12 @@
 import { Server, Socket } from "socket.io"
 
+let messageId = 0
+
 export default function SetupWebSocket(io: Server, socket: Socket)
 {
 	console.log(`Connected ${socket.id}`)
 
 	socket.on("disconnect", () => console.log(`Disconnected ${socket.id}`))
 
-	socket.on("update-input", input => io.emit("update-input", input))
+	socket.on("send-message", message => io.emit("send-message", {...message, id: messageId++}))
 }
