@@ -12,8 +12,8 @@ export default function WSTest()
 	useEffect(() =>
 	{
 		const socket = io()
-		socket.on("connect", () => console.log(`Connect ${socket.id}`))
-		socket.on("disconnect", () => console.log(`Disconnect ${socket.id}`))
+		socket.on("connect", () => console.log(`Connected ${socket.id}`))
+		socket.on("disconnect", () => console.log(`Disconnected ${socket.id}`))
 
 		socket.on("update-input", (input: string) => setWsValue(input))
 

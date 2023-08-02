@@ -4,13 +4,14 @@ import next from "next"
 import { Server } from "socket.io"
 import SetupWebSocket from "./websocket/websocket"
 
-const dev = process.env.NODE_ENV !== "production"
-const port = 3000
+(async () => {
+	const dev = process.env.NODE_ENV !== "production"
+	const port = 3000
 
-const app = next({ dev, port })
-const handleNext = app.getRequestHandler()
-app.prepare().then(() =>
-{
+	const app = next({ dev, port })
+	const handleNext = app.getRequestHandler()
+	await app.prepare()
+
 	const httpServer = createServer()
 	
 	httpServer.on("request", (req, res) => {
@@ -24,4 +25,4 @@ app.prepare().then(() =>
 	httpServer.listen(port, () => {
 		console.log(`> Ready on *:${port}`)
 	})
-})
+})()
