@@ -1,22 +1,34 @@
 "use client"
 
 import MainPanel from "@/app/components/main-panel"
-import { useEffect, useState } from "react"
+import { ChangeEvent, useEffect, useState } from "react"
 import io from "socket.io-client"
 
 export default function WSTest()
 {
 	const [wsValue, setWsValue] = useState("")
+	const [onChange, setOnChange] = useState<(event: ChangeEvent<HTMLInputElement>) => void>(() => {})
 
-	useEffect(() => void (async () =>
+	useEffect(() =>
 	{
-		await fetch("/ws")
 		const socket = io()
-	})())
+		socket.on("connect", () => console.log(`Connect ${socket.id}`))
+		socket.on("disconnect", () => console.log(`Disconnect ${socket.id}`))
+
+		socket.on("update-input", (input: string) => setWsValue(input))
+
+		setOnChange(() => (event: ChangeEvent<HTMLInputElement>) =>
+		{
+			socket.emit("update-input", event.currentTarget.value)
+			console.log("updating as " + socket.id)
+		})
+
+		return () => { socket.disconnect() }
+	}, [])
 
 	return (
 		<MainPanel title="WebSocket test">
-			<input value={wsValue} onChange={event => setWsValue(event.currentTarget.value)}></input>
+			<input value={wsValue} onChange={event => onChange(event)}></input>
 		</MainPanel>
 	)
 }
