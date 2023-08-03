@@ -1,7 +1,7 @@
 "use client"
 
-import MainPanel from "@/app/components/main-panel"
-import SBURBHeaderLite from "@/app/components/sburb-header-lite"
+import SBURBHeaderLite from "@/app/(websocketed)/(headered)/components/sburb-header-lite"
+import MainPanel from "@/components/main-panel"
 import { useState, useEffect, ReactNode, createContext, useContext } from "react"
 import { io, Socket } from "socket.io-client"
 

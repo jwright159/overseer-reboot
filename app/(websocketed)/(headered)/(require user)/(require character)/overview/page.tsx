@@ -3,7 +3,7 @@
 import { useTransition } from "react"
 import { deleteCharacter } from "@/lib/registration"
 import { useRouter } from "next/navigation"
-import MainPanel from "@/app/components/main-panel"
+import MainPanel from "@/components/main-panel"
 import { useCharacter, usePower, useSetPower } from "@/lib/context"
 
 export default function Overview()

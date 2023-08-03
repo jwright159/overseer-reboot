@@ -1,6 +1,6 @@
 "use client"
 
-import MainPanel from "@/app/components/main-panel"
+import MainPanel from "@/components/main-panel"
 import { useWebSocket } from "@/lib/websocket"
 import { useEffect, useState } from "react"
 

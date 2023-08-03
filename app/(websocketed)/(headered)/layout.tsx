@@ -1,10 +1,10 @@
 import { ReactNode } from "react"
-import ClientGameContextProvider from "@/app/components/client-game-context-provider"
-import SBURBHeaderForPlayer from "@/app/components/sburb-header-for-player"
-import SBURBHeaderLite from "@/app/components/sburb-header-lite"
 import { getCharacter, getUser } from "@/lib/cookies"
-import ClientMenuContextProvider from "@/app/components/client-menu-context-provider"
 import prisma from "@/lib/prisma"
+import ClientGameContextProvider from "./components/client-game-context-provider"
+import ClientMenuContextProvider from "./components/client-menu-context-provider"
+import SBURBHeaderForPlayer from "./components/sburb-header-for-player"
+import SBURBHeaderLite from "./components/sburb-header-lite"
 
 export default async function HeaderLayout({
 	children,

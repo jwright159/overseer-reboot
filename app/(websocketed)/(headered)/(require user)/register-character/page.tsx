@@ -1,4 +1,4 @@
-import MainPanel from "@/app/components/main-panel"
+import MainPanel from "@/components/main-panel"
 import RegisterCharacterForm from "@/app/(logged in menu)/register-character/register-character-form"
 import Link from "next/link"
 

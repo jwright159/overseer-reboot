@@ -3,7 +3,6 @@
 import { ReactNode } from "react"
 import { Character, CharacterContextProvider, Entity, EntityContextProvider, PowerContextProvider, Strife, StrifeContextProvider, User, UserContextProvider } from "@/lib/context"
 import { changePower } from "@/lib/power"
-import { WebSocketProvider } from "@/lib/websocket"
 
 export default function ClientGameContextProvider({
 	children,
