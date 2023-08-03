@@ -13,16 +13,35 @@ interface Message {
 export default function WSTest()
 {
 	const [socket, setSocket] = useState<Socket | null>(null)
+	const [connected, setConnected] = useState(false)
 
 	useEffect(() =>
 	{
 		const socket = io()
 		setSocket(socket)
-		socket.on("connect", () => console.log(`Connected ${socket.id}`))
-		socket.on("disconnect", () => console.log(`Disconnected ${socket.id}`))
+
+		socket.on("connect", () =>
+		{
+			console.log(`Connected ${socket.id}`)
+			setConnected(true)
+		})
+		socket.on("disconnect", reason =>
+		{
+			console.log(`Disconnected, ${reason}`)
+			setConnected(false)
+		})
+
+		return () =>
+		{
+			socket.disconnect()
+		}
 	}, [])
 
-	return socket ? <Messager socket={socket}/> : <p>Connecting...</p>
+	return (
+		<MainPanel title="WebSocket test">
+			{socket && connected ? <Messager socket={socket}/> : <p>Connecting...</p>}
+		</MainPanel>
+	)
 }
 
 function Messager({
@@ -46,7 +65,7 @@ function Messager({
 	}, [socket])
 
 	return (
-		<MainPanel title="WebSocket test">
+		<>
 			<div>
 				<label htmlFor="username">Username: </label><input id="username" value={username} onChange={event => setUsername(event.currentTarget.value)}></input>
 			</div>
@@ -64,6 +83,6 @@ function Messager({
 			<ul>
 				{messages.map(message => <li key={message.id}>{message.sender}: {message.text}</li>)}
 			</ul>
-		</MainPanel>
+		</>
 	)
 }

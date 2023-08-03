@@ -1,28 +1,27 @@
 import { createServer } from "http"
-import { parse } from "url"
 import next from "next"
 import { Server } from "socket.io"
 import SetupWebSocket from "./websocket/websocket"
+
+// FIXME: In case hot module reloading breaks again, https://github.com/vercel/next.js/issues/50461
 
 (async () => {
 	const dev = process.env.NODE_ENV !== "production"
 	const port = 3000
 
-	const app = next({ dev, port })
-	const handleNext = app.getRequestHandler()
+	const app = next({ dev })
+	const handleRequest = app.getRequestHandler()
+	const handleUpgrade = app.getUpgradeHandler()
 	await app.prepare()
 
 	const httpServer = createServer()
-	
-	httpServer.on("request", (req, res) => {
-		const parsedUrl = parse(req.url!, true)
-		handleNext(req, res, parsedUrl)
-	})
+	httpServer.on("request", handleRequest)
+	httpServer.on("upgrade", handleUpgrade)
 
 	const io = new Server(httpServer)
 	io.on("connect", socket => SetupWebSocket(io, socket))
 
 	httpServer.listen(port, () => {
-		console.log(`> Ready on *:${port}`)
+		console.log(`- listening on port ${port}`)
 	})
 })()

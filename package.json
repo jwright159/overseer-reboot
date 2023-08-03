@@ -3,13 +3,15 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "devnext": "next dev",
     "dev": "ts-node server.ts",
     "build": "next build",
     "start": "NODE_ENV=production ts-node server.ts",
     "lint": "next lint",
     "migrate:dev": "dotenv -e prisma/.env.dev -- npx prisma migrate dev",
     "migrateCreateOnly:dev": "dotenv -e prisma/.env.dev -- npx prisma migrate dev --create-only",
-    "studio:dev": "dotenv -e prisma/.env.dev -- npx prisma studio"
+    "studio:dev": "dotenv -e prisma/.env.dev -- npx prisma studio",
+	"postinstall": "patch-package"
   },
   "dependencies": {
     "@prisma/client": "^5.0.0",
@@ -34,6 +36,7 @@
     "utf-8-validate": "^5.0.10"
   },
   "devDependencies": {
+    "patch-package": "^8.0.0",
     "prisma": "^5.0.0"
   }
 }
