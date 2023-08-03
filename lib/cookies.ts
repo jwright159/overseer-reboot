@@ -18,6 +18,7 @@ interface CookieData
 
 async function sealCookie(data: CookieData)
 {
+	if (!cookiePassword) throw new Error("Session password not set")
 	const cookie = await sealData({
 		...await unsealCookie(),
 		...data,
