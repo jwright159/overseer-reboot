@@ -220,3 +220,7 @@
 	.overseerLogo { width: 280px; background-image: url(/images/header/overseertitle.png); }
 	.navBar { width: calc(100% - 631px); }
 }
+
+.contentBox {
+	padding-left: 170px;
+}

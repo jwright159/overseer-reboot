@@ -14,19 +14,21 @@ export default async function GameLayout({
 	const user = await getUser()
 	const character = await getCharacter(user)
 	
-	if (!user) return <>
-		<SBURBHeaderLite />
-		{children}
-	</>
+	if (!user) return (
+		<SBURBHeaderLite>
+			{children}
+		</SBURBHeaderLite>
+	)
 
-	if (!character) return <>
+	if (!character) return (
 		<ClientMenuContextProvider
 			user={user}
 		>
-			<SBURBHeaderLite />
-			{children}
+			<SBURBHeaderLite>
+				{children}
+			</SBURBHeaderLite>
 		</ClientMenuContextProvider>
-	</>
+	)
 
 	const strifeEntity = await prisma.entity.findUnique({
 		where: {
@@ -48,8 +50,9 @@ export default async function GameLayout({
 			power={character.entity.power}
 			strife={strife}
 		>
-			<SBURBHeaderForPlayer />
-			{children}
+			<SBURBHeaderForPlayer>
+				{children}
+			</SBURBHeaderForPlayer>
 		</ClientGameContextProvider>
 	)
 }

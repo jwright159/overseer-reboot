@@ -4,10 +4,12 @@ import Link from 'next/link'
 import styles from './sburb-header.module.css'
 import { useRouter } from 'next/navigation'
 import { unsetCharacter } from '@/lib/cookies'
-import { useTransition } from 'react'
+import { ReactNode, useTransition } from 'react'
 import HeaderProgressBar from './header-progress-bar'
 
 export default function SBURBHeader({
+	children,
+
 	isLoggedIn = false,
 
 	name,
@@ -23,6 +25,8 @@ export default function SBURBHeader({
 	energy,
 	maxEnergy,
 }: {
+	children: ReactNode,
+
 	isLoggedIn?: boolean,
 
 	name?: string,
@@ -153,85 +157,89 @@ export default function SBURBHeader({
 	]
 
 	return (
-		<header className={styles.headerSpacer}>
-			<div className={styles.header}>
-				<img
-					src="/sburb-header.svg"
-					className={styles.sburbBar}
-				/>
+		<>
+			<header className={styles.headerSpacer}>
+				<div className={styles.header}>
+					<img
+						src="/sburb-header.svg"
+						className={styles.sburbBar}
+					/>
 
-				{symbol !== undefined && <div className={styles.avatar}><img src={symbol} /></div>}
-				{displayClasspect !== undefined && <div className={styles.classpect}><p>{displayClasspect}</p></div>}
-				{name !== undefined && <div className={[styles.statBox, styles.characterName].join(" ")}><p>{name}</p></div>}
-				{isLoggedIn && <button className={styles.characterSwitch} onClick={() => startLogoutTransition(() => unsetCharacter().then(() => router.refresh()))} disabled={isLogoutPending}></button>}
-				{echeladderRung !== undefined && <div className={[styles.statBox, styles.echeladder].join(" ")}><Link href="/abilities"><img src="/images/header/echeladder.png"/><p>{echeladderRung}</p></Link></div>}
-				{strifePower !== undefined && <div className={[styles.statBox, styles.powerlevel].join(" ")}><Link href="/portfolio"><img src="/images/header/powerlevel.png"/><p>{strifePower}</p></Link></div>}
+					{symbol !== undefined && <div className={styles.avatar}><img src={symbol} /></div>}
+					{displayClasspect !== undefined && <div className={styles.classpect}><p>{displayClasspect}</p></div>}
+					{name !== undefined && <div className={[styles.statBox, styles.characterName].join(" ")}><p>{name}</p></div>}
+					{isLoggedIn && <button className={styles.characterSwitch} onClick={() => startLogoutTransition(() => unsetCharacter().then(() => router.refresh()))} disabled={isLogoutPending}></button>}
+					{echeladderRung !== undefined && <div className={[styles.statBox, styles.echeladder].join(" ")}><Link href="/abilities"><img src="/images/header/echeladder.png"/><p>{echeladderRung}</p></Link></div>}
+					{strifePower !== undefined && <div className={[styles.statBox, styles.powerlevel].join(" ")}><Link href="/portfolio"><img src="/images/header/powerlevel.png"/><p>{strifePower}</p></Link></div>}
 
-				{!isLoggedIn && <div className={[styles.statBox, styles.loggedOutTitle].join(" ")}><p>The Overseer Project: Reboot</p></div>}
+					{!isLoggedIn && <div className={[styles.statBox, styles.loggedOutTitle].join(" ")}><p>The Overseer Project: Reboot</p></div>}
 
-				{health !== undefined && maxHealth !== undefined && <HeaderProgressBar
-					value={health}
-					maxValue={maxHealth}
+					{health !== undefined && maxHealth !== undefined && <HeaderProgressBar
+						value={health}
+						maxValue={maxHealth}
 
-					icon="/images/header/healthchum.png"
+						icon="/images/header/healthchum.png"
 
-					backgroundRepeat={`/images/header/aspect/${aspect}_statbarcrepeat.png`}
-					backgroundEnd={`/images/header/aspect/${aspect}_statbarcend.png`}
-					foregroundRepeat={`/images/header/aspect/${aspect}_statbarrepeat.png`}
-					foregroundEnd={`/images/header/aspect/${aspect}_statbarend.png`}
+						backgroundRepeat={`/images/header/aspect/${aspect}_statbarcrepeat.png`}
+						backgroundEnd={`/images/header/aspect/${aspect}_statbarcend.png`}
+						foregroundRepeat={`/images/header/aspect/${aspect}_statbarrepeat.png`}
+						foregroundEnd={`/images/header/aspect/${aspect}_statbarend.png`}
 
-					className={styles.healthBar}
-				/>}
-				{energy !== undefined && maxEnergy !== undefined && <HeaderProgressBar
-					value={energy}
-					maxValue={maxEnergy}
+						className={styles.healthBar}
+					/>}
+					{energy !== undefined && maxEnergy !== undefined && <HeaderProgressBar
+						value={energy}
+						maxValue={maxEnergy}
 
-					icon={`/images/symbols/aspect_${aspect}.png`}
+						icon={`/images/symbols/aspect_${aspect}.png`}
 
-					backgroundRepeat={`/images/header/aspect/${aspect}_statbarcrepeat.png`}
-					backgroundEnd={`/images/header/aspect/${aspect}_statbarcend.png`}
-					foregroundRepeat={`/images/header/aspect/${aspect}_statbarrepeat.png`}
-					foregroundEnd={`/images/header/aspect/${aspect}_statbarend.png`}
+						backgroundRepeat={`/images/header/aspect/${aspect}_statbarcrepeat.png`}
+						backgroundEnd={`/images/header/aspect/${aspect}_statbarcend.png`}
+						foregroundRepeat={`/images/header/aspect/${aspect}_statbarrepeat.png`}
+						foregroundEnd={`/images/header/aspect/${aspect}_statbarend.png`}
 
-					className={styles.aspectBar}
-				/>}
-				
-				{boondollars !== undefined && <Link href="/porkhollow"><img src="/images/header/boondollars.png" className={styles.boondollarBubble}/></Link>}
-				{boondollars !== undefined && <div className={styles.boondollars}>{boondollars}</div>}
+						className={styles.aspectBar}
+					/>}
+					
+					{boondollars !== undefined && <Link href="/porkhollow"><img src="/images/header/boondollars.png" className={styles.boondollarBubble}/></Link>}
+					{boondollars !== undefined && <div className={styles.boondollars}>{boondollars}</div>}
 
-				<span className={styles.overseerLogo}></span>
-				<nav className={styles.navBar}>
-					<ul>
-						{navLinks.map(navLink => (
-							<li key={navLink.text} className={styles.navButton}>
-								{ isLoggedIn ? <>
-									<Link href={navLink.links[0].link}>
+					<span className={styles.overseerLogo}></span>
+					<nav className={styles.navBar}>
+						<ul>
+							{navLinks.map(navLink => (
+								<li key={navLink.text} className={styles.navButton}>
+									{ isLoggedIn ? <>
+										<Link href={navLink.links[0].link}>
+											<img
+												src={`/images/header/${navLink.icon}`}
+												alt={navLink.text}
+												title={navLink.text}
+											/>
+										</Link>
+										{ navLink.links &&
+											<ul>
+												{navLink.links.map(subLink => (
+													<li key={subLink.text} className={subLink.disabled ? styles.disabledLink : undefined} style={{ color: navLink.color ?? "black", borderColor: navLink.color ?? "black" }}><Link href={subLink.link}>{subLink.text.toUpperCase()}</Link></li>
+												))}
+											</ul>
+										}
+									</> :
 										<img
 											src={`/images/header/${navLink.icon}`}
 											alt={navLink.text}
 											title={navLink.text}
+											style={{ filter: "grayscale(1)" }}
 										/>
-									</Link>
-									{ navLink.links &&
-										<ul>
-											{navLink.links.map(subLink => (
-												<li key={subLink.text} className={subLink.disabled ? styles.disabledLink : undefined} style={{ color: navLink.color ?? "black", borderColor: navLink.color ?? "black" }}><Link href={subLink.link}>{subLink.text.toUpperCase()}</Link></li>
-											))}
-										</ul>
 									}
-								</> :
-									<img
-										src={`/images/header/${navLink.icon}`}
-										alt={navLink.text}
-										title={navLink.text}
-										style={{ filter: "grayscale(1)" }}
-									/>
-								}
-							</li>
-						))}
-					</ul>
-				</nav>
-			</div>
-		</header>
+								</li>
+							))}
+						</ul>
+					</nav>
+				</div>
+			</header>
+
+			{children && <div className={styles.contentBox}>{children}</div>}
+		</>
 	)
 }

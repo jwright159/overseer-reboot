@@ -1,9 +1,14 @@
 "use client"
 
+import { ReactNode } from "react"
 import SBURBHeader from './sburb-header'
 import { useEntity, usePower } from '@/lib/context'
 
-export default function SBURBHeaderForPlayer()
+export default function SBURBHeaderForPlayer({
+	children,
+}: {
+	children: ReactNode,
+})
 {
 	const entity = useEntity()
 	const power = usePower()
@@ -24,6 +29,8 @@ export default function SBURBHeaderForPlayer()
 			maxHealth={1}
 			energy={1}
 			maxEnergy={1}
-		/>
+		>
+			{children}
+		</SBURBHeader>
 	)
 }
