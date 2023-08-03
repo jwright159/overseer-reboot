@@ -5,6 +5,8 @@ import { cookies } from "next/headers"
 import prisma from "./prisma"
 import { Character, User } from "./context"
 import { Character as CharacterModel, User as UserModel } from "@prisma/client"
+import { ReactNode } from "react"
+import { CookieDataClientProvider } from "./cookies"
 
 const cookieName = "OVERSEER_SESSION"
 const cookiePassword = process.env.SESSION_PASSWORD as string // 32 character password from https://1password.com/password-generator/
@@ -38,36 +40,25 @@ async function unsealCookie(): Promise<CookieData>
 }
 
 
-export async function getUser(): Promise<User | null>
+export async function getUserId(): Promise<number>
 {
 	const cookieData = await unsealCookie()
-	if (!cookieData) return null
+	if (!cookieData) return 0
 
 	const { userId, password } = cookieData
 
-	if (!userId || typeof userId !== "number") return null
-	if (!password || typeof password !== "string") return null
+	if (!userId || typeof userId !== "number") return 0
+	if (!password || typeof password !== "string") return 0
 
 	const user = await prisma.user.findUnique({
 		where: {
 			id: userId,
 			password
-		},
-		include: {
-			characters: {include: {
-				entity: true,
-			}}
 		}
 	})
-	if (!user) return null
+	if (!user) return 0
 
-	return {
-		...user,
-		characters: user.characters.map(character => ({
-			...character,
-			entity: character.entity!,
-		}))
-	}
+	return userId
 }
 
 export async function setUser(user: UserModel)
@@ -87,32 +78,25 @@ export async function unsetUser()
 }
 
 
-export async function getCharacter(user: UserModel | null): Promise<Character | null>
+export async function getCharacterId(userId: number): Promise<number>
 {
-	if (!user) return null
+	if (!userId) return 0
 
 	const cookieData = await unsealCookie()
-	if (!cookieData) return null
+	if (!cookieData) return 0
 
 	const { characterId } = cookieData
 
-	if (!characterId || typeof characterId !== "number") return null
+	if (!characterId || typeof characterId !== "number") return 0
 
 	const character = await prisma.character.findUnique({
 		where: {
 			id: characterId
-		},
-		include: {
-			entity: true,
-		},
+		}
 	})
+	if (!character || character.userId != userId) return 0
 
-	if (!character || character.userId != user.id) return null
-
-	return {
-		...character,
-		entity: character.entity!
-	}
+	return characterId
 }
 
 export async function setCharacter(character: CharacterModel)
@@ -127,4 +111,23 @@ export async function unsetCharacter()
 	await sealCookie({
 		characterId: undefined,
 	})
+}
+
+export async function CookieDataProvider({
+	children,
+}: {
+	children: ReactNode,
+})
+{
+	const userId = await getUserId()
+	const characterId = await getCharacterId(userId)
+
+	return (
+		<CookieDataClientProvider
+			userId={userId}
+			characterId={characterId}
+		>
+			{children}
+		</CookieDataClientProvider>
+	)
 }

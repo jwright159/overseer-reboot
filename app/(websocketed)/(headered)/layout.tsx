@@ -1,19 +1,17 @@
+"use client"
+
 import { ReactNode } from "react"
-import { getCharacter, getUser } from "@/lib/cookies"
 import prisma from "@/lib/prisma"
 import ClientGameContextProvider from "./components/client-game-context-provider"
 import ClientMenuContextProvider from "./components/client-menu-context-provider"
 import SBURBHeaderForPlayer from "./components/sburb-header-for-player"
 import SBURBHeaderLite from "./components/sburb-header-lite"
 
-export default async function HeaderLayout({
+export default function HeaderLayout({
 	children,
 }: {
 	children: ReactNode,
 }) {
-	const user = await getUser()
-	const character = await getCharacter(user)
-	
 	if (!user) return (
 		<SBURBHeaderLite>
 			{children}

@@ -3,7 +3,7 @@
 import Link from 'next/link'
 import styles from './sburb-header.module.css'
 import { useRouter } from 'next/navigation'
-import { unsetCharacter } from '@/lib/cookies'
+import { unsetCharacter } from '@/lib/cookies-server'
 import { ReactNode, useTransition } from 'react'
 import HeaderProgressBar from './header-progress-bar'
 

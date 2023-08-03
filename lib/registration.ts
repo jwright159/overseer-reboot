@@ -1,6 +1,6 @@
 "use server"
 
-import { setCharacter, setUser } from "./cookies"
+import { setCharacter, setUser } from "./cookies-server"
 import prisma from "./prisma"
 import bcrypt from "bcrypt"
 import { getPlayerTeam } from "./team"
