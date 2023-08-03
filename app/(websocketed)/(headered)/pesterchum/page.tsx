@@ -1,8 +1,8 @@
 "use client"
 
 import MainPanel from "@/app/components/main-panel"
+import { useWebSocket } from "@/lib/websocket"
 import { useEffect, useState } from "react"
-import io, { Socket } from "socket.io-client"
 
 interface Message {
 	sender: string,
@@ -10,46 +10,10 @@ interface Message {
 	id: number,
 }
 
-export default function WSTest()
+export default function Pesterchum()
 {
-	const [socket, setSocket] = useState<Socket | null>(null)
-	const [connected, setConnected] = useState(false)
+	const socket = useWebSocket()
 
-	useEffect(() =>
-	{
-		const socket = io()
-		setSocket(socket)
-
-		socket.on("connect", () =>
-		{
-			console.log(`Connected ${socket.id}`)
-			setConnected(true)
-		})
-		socket.on("disconnect", reason =>
-		{
-			console.log(`Disconnected, ${reason}`)
-			setConnected(false)
-		})
-
-		return () =>
-		{
-			socket.disconnect()
-		}
-	}, [])
-
-	return (
-		<MainPanel title="WebSocket test">
-			{socket && connected ? <Messenger socket={socket}/> : <p>Connecting...</p>}
-		</MainPanel>
-	)
-}
-
-function Messenger({
-	socket,
-}: {
-	socket: Socket,
-})
-{
 	const [username, setUsername] = useState("")
 	const [messageText, setMessageText] = useState("")
 	const [messages, setMessages] = useState<Message[]>([])
@@ -72,7 +36,7 @@ function Messenger({
 	}
 
 	return (
-		<>
+		<MainPanel title="Pesterchum?">
 			<div>
 				<label htmlFor="username">Username: </label><input id="username" value={username} onChange={event => setUsername(event.currentTarget.value)}></input>
 			</div>
@@ -96,6 +60,6 @@ function Messenger({
 			<ul>
 				{messages.map(message => <li key={message.id}>{message.sender}: {message.text}</li>)}
 			</ul>
-		</>
+		</MainPanel>
 	)
 }

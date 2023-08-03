@@ -6,7 +6,7 @@ import { getCharacter, getUser } from "@/lib/cookies"
 import ClientMenuContextProvider from "@/app/components/client-menu-context-provider"
 import prisma from "@/lib/prisma"
 
-export default async function GameLayout({
+export default async function HeaderLayout({
 	children,
 }: {
 	children: ReactNode,

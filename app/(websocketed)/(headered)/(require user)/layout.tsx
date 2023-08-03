@@ -4,7 +4,20 @@ import { useNullableUser } from "@/lib/context"
 import { useRouter } from "next/navigation"
 import { ReactNode, useEffect } from "react"
 
-export default function LoginRedirector({
+export default async function GameLoginLayout({
+	children,
+}: {
+	children: ReactNode,
+})
+{
+	return (
+		<LoginRedirector>
+			{children}
+		</LoginRedirector>
+	)
+}
+
+function LoginRedirector({
 	children
 }: {
 	children: ReactNode

@@ -4,7 +4,20 @@ import { useNullableCharacter } from "@/lib/context"
 import { useRouter } from "next/navigation"
 import { ReactNode, useEffect } from "react"
 
-export default function LoginCharacterRedirector({
+export default async function GameCharacterLoginLayout({
+	children,
+}: {
+	children: ReactNode,
+})
+{
+	return (
+		<LoginCharacterRedirector>
+			{children}
+		</LoginCharacterRedirector>
+	)
+}
+
+function LoginCharacterRedirector({
 	children
 }: {
 	children: ReactNode
