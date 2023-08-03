@@ -39,12 +39,12 @@ export default function WSTest()
 
 	return (
 		<MainPanel title="WebSocket test">
-			{socket && connected ? <Messager socket={socket}/> : <p>Connecting...</p>}
+			{socket && connected ? <Messenger socket={socket}/> : <p>Connecting...</p>}
 		</MainPanel>
 	)
 }
 
-function Messager({
+function Messenger({
 	socket,
 }: {
 	socket: Socket,
@@ -64,6 +64,13 @@ function Messager({
 		}
 	}, [socket])
 
+	function submitMessage()
+	{
+		if (!username || !messageText) return
+		socket.emit("send-message", {sender: username, text: messageText})
+		setMessageText("")
+	}
+
 	return (
 		<>
 			<div>
@@ -71,13 +78,19 @@ function Messager({
 			</div>
 
 			<div>
-				<input value={messageText} onChange={event => setMessageText(event.currentTarget.value)}></input>
-				<button onClick={() =>
-				{
-					if (!username || !messageText) return
-					socket.emit("send-message", {sender: username, text: messageText})
-					setMessageText("")
-				}}>Send</button>
+				<input
+					value={messageText}
+					onChange={event => setMessageText(event.currentTarget.value)}
+					onKeyDown={event =>
+					{
+						if (event.key === "Enter")
+						{
+							event.preventDefault()
+							submitMessage()
+						}
+					}}
+				></input>
+				<button onClick={submitMessage}>Send</button>
 			</div>
 
 			<ul>
