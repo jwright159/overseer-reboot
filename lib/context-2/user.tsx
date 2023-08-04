@@ -2,16 +2,36 @@
 
 import { User } from "@prisma/client"
 import { useWebSocket } from "../websocket"
+import { useCallback, useSyncExternalStore } from "react"
+
+const cache: Record<number, User> = {}
 
 export function useUser(id: number)
 {
 	const socket = useWebSocket()
-	// This is an "acknowledgement", just call the callback from the server when done
-	socket.emit("fetch-user", id, (user: User) => {
 
-	})
+	const subscribe = useCallback((callback: () => void) =>
+	{
+		function cacheResult(user: User)
+		{
+			cache[user.id] = user
+			callback()
+		}
 
-	// I'm guessing there should either be useEffect or probably useSyncExternalStore
+		socket.on("update-user", cacheResult)
+		socket.emit("subscribe-user", id)
 
-	return 
+		return () =>
+		{
+			socket.off("update-user", cacheResult)
+			socket.emit("unsubscribe-user", id)
+		}
+	}, [socket, id])
+
+	function getSnapshot()
+	{
+		return cache[id] ?? null
+	}
+	
+	return useSyncExternalStore(subscribe, getSnapshot)
 }

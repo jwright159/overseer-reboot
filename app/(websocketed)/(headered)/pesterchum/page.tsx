@@ -1,45 +1,51 @@
 "use client"
 
 import MainPanel from "@/components/main-panel"
+import { usePlayerUser } from "@/lib/context-2/player-user"
 import { useWebSocket } from "@/lib/websocket"
 import { useEffect, useState } from "react"
-
-interface Message {
-	sender: string,
-	text: string,
-	id: number,
-}
 
 export default function Pesterchum()
 {
 	const socket = useWebSocket()
 
-	const [username, setUsername] = useState("")
+	const user = usePlayerUser()
+
 	const [messageText, setMessageText] = useState("")
-	const [messages, setMessages] = useState<Message[]>([])
+	const [messages, setMessages] = useState<{id: number, text: string}[]>([])
+
+	const recieveMessage = (message: any) => setMessages(messages => [...messages, {id: message.id, text: `[${message.sender}] ${message.text}`}])
+	const recieveJoin = (message: any) => setMessages(messages => [...messages, {id: message.id, text: `--- ${message.sender} joined the chat! ---`}])
+	const recieveLeave = (message: any) => setMessages(messages => [...messages, {id: message.id, text: `--- ${message.sender} left the chat! ---`}])
 
 	useEffect(() =>
 	{
-		socket.on("send-message", (message: Message) => setMessages(messages => [...messages, message]))
+		if (!user) return
+
+		socket.on("send-message", recieveMessage)
+		socket.on("join-chat", recieveJoin)
+		socket.on("leave-chat", recieveLeave)
+		socket.emit("join-chat", user.username)
 
 		return () =>
 		{
-			socket.off("send-message")
+			socket.emit("leave-chat")
+			socket.off("send-message", recieveMessage)
+			socket.off("join-chat", recieveJoin)
+			socket.off("leave-chat", recieveLeave)
 		}
-	}, [socket])
+	}, [socket, user])
 
 	function submitMessage()
 	{
-		if (!username || !messageText) return
-		socket.emit("send-message", {sender: username, text: messageText})
+		if (!user || !messageText) return
+		socket.emit("send-message", {sender: user.username, text: messageText})
 		setMessageText("")
 	}
 
 	return (
 		<MainPanel title="Pesterchum?">
-			<div>
-				<label htmlFor="username">Username: </label><input id="username" value={username} onChange={event => setUsername(event.currentTarget.value)}></input>
-			</div>
+			{user ? <p>Logged in as {user.username}</p> : <p>Logging in...</p>}
 
 			<div>
 				<input
@@ -58,7 +64,7 @@ export default function Pesterchum()
 			</div>
 
 			<ul>
-				{messages.map(message => <li key={message.id}>{message.sender}: {message.text}</li>)}
+				{messages.map(message => <li key={message.id}>{message.text}</li>)}
 			</ul>
 		</MainPanel>
 	)

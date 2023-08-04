@@ -36,20 +36,18 @@ export function WebSocketProvider({
 
 		return () =>
 		{
-			console.log("disconnecting on purpose")
 			socket.disconnect()
 		}
 	}, [])
 
-	return (socket && connected
-		?
+	return (socket && connected ?
 		<WebSocketContext.Provider value={socket}>
 			{children}
 		</WebSocketContext.Provider>
 		:
 		<SBURBHeaderLite>
 			<MainPanel title="Please wait">
-				<p>Connecting to server</p>
+				<p>Connecting to server...</p>
 			</MainPanel>
 		</SBURBHeaderLite>
 	)

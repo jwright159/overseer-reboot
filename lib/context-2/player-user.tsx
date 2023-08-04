@@ -2,11 +2,11 @@
 
 import { ReactNode, createContext, useContext } from "react"
 import { User } from "@prisma/client"
+import { useUser } from "./user"
 
 const PlayerUserContext = createContext<User | null>(null)
 
-export const usePlayerUser = () => useContext(PlayerUserContext)!
-export const useNullablePlayerUser = () => useContext(PlayerUserContext)
+export const usePlayerUser = () => useContext(PlayerUserContext)
 
 export function PlayerUserContextProvider({
 	children,

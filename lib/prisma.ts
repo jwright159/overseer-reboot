@@ -20,3 +20,7 @@ else
 }
 
 export default prisma
+
+declare global {
+	var prisma: PrismaClient
+}
