@@ -2,6 +2,7 @@ import { ReactNode } from 'react'
 import './globals.css'
 import type { Metadata } from 'next'
 import { ReferrerContextProvider } from "@/lib/referrer"
+import { CookieDataProvider } from "@/lib/cookies-server"
 
 export const metadata: Metadata = {
 	title: 'Overseer Reboot',
@@ -18,7 +19,9 @@ export default async function RootLayout({
 		<html lang="en">
 			<body>
 				<ReferrerContextProvider>
-					{children}
+					<CookieDataProvider>
+						{children}
+					</CookieDataProvider>
 				</ReferrerContextProvider>
 			</body>
 		</html>

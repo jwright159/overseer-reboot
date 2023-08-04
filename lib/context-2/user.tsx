@@ -3,6 +3,7 @@
 import { User } from "@prisma/client"
 import { useWebSocket } from "../websocket"
 import { useCallback, useSyncExternalStore } from "react"
+import { useUserId } from "../cookies"
 
 const cache: Record<number, User> = {}
 
@@ -35,3 +36,5 @@ export function useUser(id: number)
 	
 	return useSyncExternalStore(subscribe, getSnapshot)
 }
+
+export const usePlayerUser = () => useUser(useUserId())

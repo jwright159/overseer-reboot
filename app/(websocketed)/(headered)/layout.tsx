@@ -3,7 +3,6 @@ import ClientGameContextProvider from "./components/client-game-context-provider
 import ClientMenuContextProvider from "./components/client-menu-context-provider"
 import SBURBHeaderForPlayer from "./components/sburb-header-for-player"
 import SBURBHeaderLite from "./components/sburb-header-lite"
-import { PlayerUserContextProvider } from "@/lib/context-2/player-user"
 import { getUserId } from "@/lib/cookies-server"
 
 export default async function HeaderLayout({
@@ -20,11 +19,9 @@ export default async function HeaderLayout({
 	)
 
 	return (
-		<PlayerUserContextProvider userId={user}>
-			<SBURBHeaderLite>
-				{children}
-			</SBURBHeaderLite>
-		</PlayerUserContextProvider>
+		<SBURBHeaderLite>
+			{children}
+		</SBURBHeaderLite>
 	)
 
 	if (!character) return (
