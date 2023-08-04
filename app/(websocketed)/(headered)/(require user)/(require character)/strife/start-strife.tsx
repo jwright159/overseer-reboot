@@ -1,6 +1,6 @@
 "use client"
 
-import { useCharacter } from "@/lib/context"
+import { usePlayerCharacter } from "@/lib/context/character"
 import { startStrife } from "@/lib/strife"
 import { useRouter } from "next/navigation"
 import { useTransition } from "react"
@@ -11,7 +11,7 @@ export default function StartStrife()
 
 	const [isPending, startTransition] = useTransition()
 
-	const character = useCharacter()
+	const character = usePlayerCharacter()!
 
 	return (
 		<button disabled={isPending} onClick={() =>

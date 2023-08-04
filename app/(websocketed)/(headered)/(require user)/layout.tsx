@@ -1,6 +1,7 @@
 "use client"
 
-import { useNullableUser } from "@/lib/context"
+import MainPanel from "@/components/main-panel"
+import { usePlayerUser } from "@/lib/context/user"
 import { useRouter } from "next/navigation"
 import { ReactNode, useEffect } from "react"
 
@@ -24,13 +25,16 @@ export function LoginRedirector({
 })
 {
 	const router = useRouter()
-	const user = useNullableUser()
+	const user = usePlayerUser()
 
 	useEffect(() => 
 	{
-		if (!user)
+		if (user === undefined)
 			router.push("/login")
 	})
 
-	if (user) return children
+	return user ? children :
+		<MainPanel title="Loading">
+			<p>Loading user...</p>
+		</MainPanel>
 }

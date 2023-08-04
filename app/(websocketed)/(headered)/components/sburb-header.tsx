@@ -13,7 +13,7 @@ export default function SBURBHeader({
 	isLoggedIn = false,
 
 	name,
-	symbol,
+	symbol = "/images/grist/Build_Grist.png",
 	boondollars,
 	aspect,
 	displayClasspect,

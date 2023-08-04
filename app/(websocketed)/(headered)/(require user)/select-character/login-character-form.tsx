@@ -2,9 +2,10 @@
 
 import { useRouter } from "next/navigation"
 import { useState, useTransition } from "react"
-import { useUser } from "@/lib/context"
 import { loginCharacter } from "@/lib/registration"
 import { useReferrer } from "@/lib/referrer"
+import { useCharactersOfUser } from "@/lib/context/character"
+import { useUserId } from "@/lib/cookies"
 
 export default function LoginCharacterForm()
 {
@@ -15,9 +16,9 @@ export default function LoginCharacterForm()
 
 	const referrer = useReferrer()
 
-	const user = useUser()
+	const characters = useCharactersOfUser(useUserId())
 
-	return (user.characters.length ?
+	return (characters !== null && characters.length ?
 			<form onSubmit={event => {
 				event.preventDefault()
 				setErrorText("")
@@ -36,7 +37,7 @@ export default function LoginCharacterForm()
 					router.push(referrer)
 				})
 			}}>
-				{user.characters.map(character => (
+				{characters.map(character => (
 					<p key={character.id}><input id={character.id.toString()} name="characterId" type="radio" value={character.id} disabled={isPending}/> <label htmlFor={character.id.toString()}>{character.entity!.name}</label></p>
 				))}
 
@@ -44,7 +45,9 @@ export default function LoginCharacterForm()
 
 				<p style={{ color: "red" }}>{errorText}</p>
 			</form>
-		:
+		: characters !== null ?
 			<p>You have no characters!</p>
+		:
+			<p>Loading characters...</p>
 	)
 }

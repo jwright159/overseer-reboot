@@ -1,13 +1,13 @@
 "use client"
 
 import MainPanel from "@/components/main-panel"
-import { useEntity } from "@/lib/context"
 import PlayStrife from "./play-strife"
 import StartStrife from "./start-strife"
+import { usePlayerEntity } from "@/lib/context/entity"
 
 export default function Strife()
 {
-	const entity = useEntity()
+	const entity = usePlayerEntity()!
 
 	return (
 		<MainPanel title="Strife">

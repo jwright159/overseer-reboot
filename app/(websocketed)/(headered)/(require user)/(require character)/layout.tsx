@@ -1,6 +1,8 @@
 "use client"
 
-import { useNullableCharacter } from "@/lib/context"
+import MainPanel from "@/components/main-panel"
+import { usePlayerCharacter } from "@/lib/context/character"
+import { usePlayerEntity } from "@/lib/context/entity"
 import { useRouter } from "next/navigation"
 import { ReactNode, useEffect } from "react"
 
@@ -24,13 +26,17 @@ export function LoginCharacterRedirector({
 })
 {
 	const router = useRouter()
-	const character = useNullableCharacter()
+	const character = usePlayerCharacter()
+	const entity = usePlayerEntity()
 
 	useEffect(() => 
 	{
-		if (!character)
+		if (character === undefined)
 			router.push("/select-character")
 	})
 
-	if (character) return children
+	return character && entity ? children :
+		<MainPanel title="Loading">
+			<p>Loading {character ? "entity" : "character"}...</p>
+		</MainPanel>
 }

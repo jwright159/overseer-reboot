@@ -1,6 +1,6 @@
 "use server"
 
-import { Character } from "./context"
+import { Character } from "@prisma/client"
 import prisma from "./prisma"
 import { getUnderlingTeam } from "./team"
 

@@ -1,6 +1,6 @@
 "use client"
 
-import SBURBHeaderLite from "@/app/(websocketed)/(headered)/components/sburb-header-lite"
+import SBURBHeader from "@/app/(websocketed)/(headered)/components/sburb-header"
 import MainPanel from "@/components/main-panel"
 import { useState, useEffect, ReactNode, createContext, useContext } from "react"
 import { io, Socket } from "socket.io-client"
@@ -45,10 +45,10 @@ export function WebSocketProvider({
 			{children}
 		</WebSocketContext.Provider>
 		:
-		<SBURBHeaderLite>
+		<SBURBHeader>
 			<MainPanel title="Please wait">
 				<p>Connecting to server...</p>
 			</MainPanel>
-		</SBURBHeaderLite>
+		</SBURBHeader>
 	)
 }

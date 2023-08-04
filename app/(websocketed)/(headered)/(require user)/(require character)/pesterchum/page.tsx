@@ -1,7 +1,7 @@
 "use client"
 
 import MainPanel from "@/components/main-panel"
-import { usePlayerUser } from "@/lib/context-2/user"
+import { usePlayerUser } from "@/lib/context/user"
 import { useWebSocket } from "@/lib/websocket"
 import { useEffect, useState } from "react"
 

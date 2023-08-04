@@ -3,8 +3,7 @@
 import { sealData, unsealData } from "iron-session"
 import { cookies } from "next/headers"
 import prisma from "./prisma"
-import { Character, User } from "./context"
-import { Character as CharacterModel, User as UserModel } from "@prisma/client"
+import { Character, User } from "@prisma/client"
 import { ReactNode } from "react"
 import { CookieDataClientProvider } from "./cookies"
 
@@ -61,7 +60,7 @@ export async function getUserId(): Promise<number>
 	return userId
 }
 
-export async function setUser(user: UserModel)
+export async function setUser(user: User)
 {
 	await sealCookie({
 		userId: user.id,
@@ -99,7 +98,7 @@ export async function getCharacterId(userId: number): Promise<number>
 	return characterId
 }
 
-export async function setCharacter(character: CharacterModel)
+export async function setCharacter(character: Character)
 {
 	await sealCookie({
 		characterId: character.id,

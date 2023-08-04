@@ -3,9 +3,9 @@
 import { useRouter } from "next/navigation"
 import { useState, useTransition } from "react"
 import { getSession, registerCharacter } from "@/lib/registration"
-import { useUser } from "@/lib/context"
 import Link from "next/link"
 import { useReferrer } from "@/lib/referrer"
+import { usePlayerUser } from "@/lib/context/user"
 
 export default function RegisterCharacterForm()
 {
@@ -16,7 +16,7 @@ export default function RegisterCharacterForm()
 
 	const referrer = useReferrer()
 
-	const user = useUser()
+	const user = usePlayerUser()!
 
 	return (
 		<form onSubmit={event =>
