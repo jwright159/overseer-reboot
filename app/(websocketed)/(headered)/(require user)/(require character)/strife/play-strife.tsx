@@ -7,19 +7,25 @@ export default function PlayStrife()
 {
 	const strife = usePlayerStrife()
 	
-	return (
-		<ul>
-			{strife.entities.map(entity => <ListEntity key={entity.id} entityId={entity.id}/>)}
-		</ul>
+	return (strife ?
+			<ul>
+				{strife.entityIds.map(id => <EntityEntry key={id} id={id}/>)}
+			</ul>
+		:
+			<p>Loading strife...</p>
 	)
 }
 
-function ListEntity({
-	entityId,
+function EntityEntry({
+	id,
 }: {
-	entityId: number,
+	id: number,
 })
 {
-	const entity = useEntity(entityId)
-	return entity ? <li>{entity.name} - {entity.power} power</li> : <li>Loading entity...</li>
+	const entity = useEntity(id)
+	return (entity ?
+			<li>{entity.name} - {entity.power} power</li>
+		:
+			<li>Loading entity...</li>
+	)
 }

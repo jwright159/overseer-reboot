@@ -1,7 +1,7 @@
 import { createServer } from "http"
 import next from "next"
 import { Server } from "socket.io"
-import SetupWebSocket from "./lib/websocket-server"
+import SetupWebSocket from "./websocket/websocket"
 
 // FIXME: In case hot module reloading breaks again, https://github.com/vercel/next.js/issues/50461
 

@@ -4,8 +4,9 @@ import { useRouter } from "next/navigation"
 import { useState, useTransition } from "react"
 import { loginCharacter } from "@/lib/registration"
 import { useReferrer } from "@/lib/referrer"
-import { useCharactersOfUser } from "@/lib/context/character"
-import { useUserId } from "@/lib/cookies"
+import { usePlayerUser } from "@/lib/context/user"
+import { useCharacter } from "@/lib/context/character"
+import { useEntity } from "@/lib/context/entity"
 
 export default function LoginCharacterForm()
 {
@@ -16,9 +17,9 @@ export default function LoginCharacterForm()
 
 	const referrer = useReferrer()
 
-	const characters = useCharactersOfUser(useUserId())
+	const user = usePlayerUser()!
 
-	return (characters !== null && characters.length ?
+	return (user.characterIds.length ?
 			<form onSubmit={event => {
 				event.preventDefault()
 				setErrorText("")
@@ -37,17 +38,31 @@ export default function LoginCharacterForm()
 					router.push(referrer)
 				})
 			}}>
-				{characters.map(character => (
-					<p key={character.id}><input id={character.id.toString()} name="characterId" type="radio" value={character.id} disabled={isPending}/> <label htmlFor={character.id.toString()}>{character.entity!.name}</label></p>
-				))}
+				{user.characterIds.map(id => <CharacterEntry key={id} id={id} disabled={isPending}/>)}
 
 				<input type="submit" value="Select" disabled={isPending}/>
 
 				<p style={{ color: "red" }}>{errorText}</p>
 			</form>
-		: characters !== null ?
-			<p>You have no characters!</p>
 		:
-			<p>Loading characters...</p>
+			<p>You have no characters!</p>
+	)
+}
+
+function CharacterEntry({
+	id,
+	disabled,
+}: {
+	id: number,
+	disabled: boolean,
+})
+{
+	const character = useCharacter(id)
+	const entity = useEntity(character?.entityId ?? 0)
+
+	return (character && entity ?
+			<p><input id={id.toString()} name="characterId" type="radio" value={character.id} disabled={disabled}/> <label htmlFor={character.id.toString()}>{entity.name}</label></p>
+		:
+			<p>Loading character...</p>
 	)
 }

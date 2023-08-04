@@ -1,8 +1,12 @@
 "use client"
 
-import { User } from "@prisma/client"
+import { User as UserModel } from "@prisma/client"
 import { useUserId } from "../cookies"
 import createCache from "./context"
+
+export interface User extends UserModel {
+	characterIds: number[],
+}
 
 export const [useUser, useSetCharacter] = createCache<User>("user")
 
