@@ -1,42 +1,20 @@
 "use client"
 
-import { useRouter } from "next/navigation"
-import { useState, useTransition } from "react"
-import { loginCharacter } from "@/lib/registration"
-import { useReferrer } from "@/lib/referrer"
 import { usePlayerUser } from "@/lib/context/user"
 import { useCharacter } from "@/lib/context/character"
 import { useEntity } from "@/lib/context/entity"
+import { useLoginCharacter } from "@/lib/registration"
 
 export default function LoginCharacterForm()
 {
-	const router = useRouter()
-
-	const [errorText, setErrorText] = useState("")
-	const [isPending, startTransition] = useTransition()
-
-	const referrer = useReferrer()
-
+	const {isPending, errorText, login} = useLoginCharacter()
 	const user = usePlayerUser()!
 
 	return (user.characterIds.length ?
 			<form onSubmit={event => {
 				event.preventDefault()
-				setErrorText("")
-
 				const characterId = parseInt(event.currentTarget.characterId.value)
-
-				startTransition(async () =>
-				{
-					const character = await loginCharacter(characterId)
-					if (typeof character === "string")
-					{
-						setErrorText(character)
-						return
-					}
-
-					router.push(referrer)
-				})
+				login(characterId)
 			}}>
 				{user.characterIds.map(id => <CharacterEntry key={id} id={id} disabled={isPending}/>)}
 

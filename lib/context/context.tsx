@@ -3,7 +3,7 @@
 import { useWebSocket } from "../websocket"
 import { useCallback, useSyncExternalStore } from "react"
 
-export default function createCache<T extends {id: number}>(table: string): [typeof useCachedValue, typeof useSetCachedValue]
+export function createCache<T extends {id: number}>(table: string): [typeof useCachedValue, typeof useSetCachedValue]
 {
 	const cache: Record<number, T> = {}
 
@@ -33,7 +33,7 @@ export default function createCache<T extends {id: number}>(table: string): [typ
 
 		function getSnapshot(): T | null
 		{
-			return cache[id || 0] ?? null
+			return cache[id ?? 0] ?? null
 		}
 		
 		return useSyncExternalStore(subscribe, getSnapshot)

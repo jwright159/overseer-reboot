@@ -5,7 +5,7 @@ import { cookies } from "next/headers"
 import prisma from "./prisma"
 import { Character, User } from "@prisma/client"
 import { ReactNode } from "react"
-import { CookieDataClientProvider } from "./cookies"
+import { RegistrationProvider } from "./registration"
 
 const cookieName = "OVERSEER_SESSION"
 const cookiePassword = process.env.SESSION_PASSWORD as string // 32 character password from https://1password.com/password-generator/
@@ -110,23 +110,4 @@ export async function unsetCharacter()
 	await sealCookie({
 		characterId: undefined,
 	})
-}
-
-export async function CookieDataProvider({
-	children,
-}: {
-	children: ReactNode,
-})
-{
-	const userId = await getUserId()
-	const characterId = await getCharacterId(userId)
-
-	return (
-		<CookieDataClientProvider
-			userId={userId}
-			characterId={characterId}
-		>
-			{children}
-		</CookieDataClientProvider>
-	)
 }

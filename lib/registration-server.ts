@@ -1,10 +1,9 @@
 "use server"
 
-import { setCharacter, setUser } from "./cookies-server"
 import prisma from "./prisma"
 import bcrypt from "bcrypt"
 import { getPlayerTeam } from "./team"
-import { Character, Session, User } from "@prisma/client"
+import { Session, User } from "@prisma/client"
 
 export async function loginUser(username: string, password: string)
 {
@@ -14,7 +13,6 @@ export async function loginUser(username: string, password: string)
 	const passwordCorrect = await bcrypt.compare(password, user.password)
 	if (!passwordCorrect) return "Wrong username or password"
 	
-	await setUser(user)
 	return user
 }
 
@@ -34,7 +32,6 @@ export async function registerUser(username: string, password: string)
 		password: passwordHash,
 	}})
 
-	await setUser(user)
 	return user
 }
 
@@ -45,7 +42,6 @@ export async function loginCharacter(id: number)
 	const character = await prisma.character.findUnique({ where: { id } })
 	if (!character) return "No character with that ID"
 	
-	await setCharacter(character)
 	return character
 }
 
@@ -68,14 +64,12 @@ export async function registerCharacter(user: User, session: Session, name: stri
 		owningCharacter: { connect: { id: character.id } },
 	}})
 
-	await setCharacter(character)
 	return character
 }
 
-export async function deleteCharacter(character: Character)
+export async function deleteCharacter(id: number)
 {
-	const resCharacter = await prisma.character.delete({ where: { id: character.id } })
-
+	const resCharacter = await prisma.character.delete({where: {id}})
 	return resCharacter
 }
 

@@ -1,7 +1,7 @@
 "use client"
 
 import { Strife as StrifeModel } from "@prisma/client"
-import createCache from "./context"
+import { createCache } from "./context"
 import { usePlayerEntity } from "./entity"
 
 export interface Strife extends StrifeModel {

@@ -2,13 +2,10 @@
 
 import { usePlayerCharacter } from "@/lib/context/character"
 import { startStrife } from "@/lib/strife"
-import { useRouter } from "next/navigation"
 import { useTransition } from "react"
 
 export default function StartStrife()
 {
-	const router = useRouter()
-
 	const [isPending, startTransition] = useTransition()
 
 	const character = usePlayerCharacter()!
@@ -19,7 +16,6 @@ export default function StartStrife()
 			startTransition(async () =>
 			{
 				await startStrife(character)
-				router.refresh()
 			})
 		}}>
 			Start strife with 1 generic imp

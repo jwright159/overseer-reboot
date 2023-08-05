@@ -1,14 +1,9 @@
 "use client"
 
-import { unsetUser } from "@/lib/cookies-server"
-import { useRouter } from "next/navigation"
-import { useTransition } from "react"
+import { useLogoutUser } from "@/lib/registration"
 
 export default function LogoutButton()
 {
-	const router = useRouter()
-
-	const [isPending, startTransition] = useTransition()
-
-	return <button onClick={() => startTransition(() => unsetUser().then(router.refresh))} disabled={isPending}>Logout</button>
+	const {isPending, logout} = useLogoutUser()
+	return <button onClick={logout} disabled={isPending}>Logout</button>
 }

@@ -3,6 +3,7 @@
 import MainPanel from "@/components/main-panel"
 import { usePlayerCharacter } from "@/lib/context/character"
 import { usePlayerEntity } from "@/lib/context/entity"
+import { usePlayerUser } from "@/lib/context/user"
 import { useRouter } from "next/navigation"
 import { ReactNode, useEffect } from "react"
 
@@ -26,14 +27,15 @@ export function LoginCharacterRedirector({
 })
 {
 	const router = useRouter()
+	const user = usePlayerUser()
 	const character = usePlayerCharacter()
 	const entity = usePlayerEntity()
 
 	useEffect(() => 
 	{
-		if (character === undefined)
+		if (user && character === undefined)
 			router.push("/select-character")
-	})
+	}, [user, character])
 
 	return character && entity ? children :
 		<MainPanel title="Loading">

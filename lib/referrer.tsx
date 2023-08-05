@@ -8,31 +8,14 @@ const defaultReferrer = "/overview"
 const ReferrerContext = createContext(defaultReferrer)
 export const useReferrer = () => useContext(ReferrerContext)
 
-export function ReferrerContextProvider({
+export function ReferrerProvider({
 	children,
 }: {
 	children: ReactNode,
 })
 {
-	const [referrer, setReferrer] = useState(defaultReferrer)
-
-	return (
-		<>
-			<ReferrerContextProviderProvider setReferrer={setReferrer}/>
-			<ReferrerContext.Provider value={referrer}>
-				{children}
-			</ReferrerContext.Provider>
-		</>
-	)
-}
-
-function ReferrerContextProviderProvider({
-	setReferrer
-}: {
-	setReferrer: Dispatch<SetStateAction<string>>
-})
-{
 	const pathname = usePathname()
+	const [referrer, setReferrer] = useState(defaultReferrer)
 
 	useEffect(() =>
 	{
@@ -44,7 +27,13 @@ function ReferrerContextProviderProvider({
 			pathname === "/register-session"
 		))
 			setReferrer(pathname)
-	})
-	
-	return <></>
+	}, [pathname])
+
+	return (
+		<>
+			<ReferrerContext.Provider value={referrer}>
+				{children}
+			</ReferrerContext.Provider>
+		</>
+	)
 }

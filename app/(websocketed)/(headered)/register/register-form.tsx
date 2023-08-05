@@ -1,38 +1,17 @@
 "use client"
 
-import { useRouter } from "next/navigation"
-import { useState, useTransition } from "react"
-import { registerUser } from "@/lib/registration"
-import { useReferrer } from "@/lib/referrer"
+import { useLoginUser } from "@/lib/registration"
 
 export default function RegisterForm()
 {
-	const router = useRouter()
-
-	const [errorText, setErrorText] = useState("")
-	const [isPending, startTransition] = useTransition()
-
-	const referrer = useReferrer()
+	const {isPending, errorText, register} = useLoginUser()
 
 	return (
 		<form onSubmit={event => {
 			event.preventDefault()
-			setErrorText("")
-
 			const username = `${event.currentTarget.username.value}`
 			const password = `${event.currentTarget.password.value}`
-
-			startTransition(async () =>
-			{
-				const user = await registerUser(username, password)
-				if (typeof user === "string")
-				{
-					setErrorText(user)
-					return
-				}
-
-				router.push(referrer)
-			})
+			register(username, password)
 		}}>
 			<p><label htmlFor="username">Username:</label> <input id="username" name="username" disabled={isPending}/></p>
 			<p><label htmlFor="password">Password:</label> <input type="password" id="password" name="password" disabled={isPending}/></p>

@@ -1,40 +1,16 @@
 "use client"
 
-import { useRouter } from "next/navigation"
-import { useState, useTransition } from "react"
-import { registerSession } from "@/lib/registration"
-import { useReferrer } from "@/lib/referrer"
-import { usePlayerUser } from "@/lib/context/user"
+import { useRegisterSession } from "@/lib/registration"
 
 export default function RegisterSessionForm()
 {
-	const router = useRouter()
-
-	const [errorText, setErrorText] = useState("")
-	const [isPending, startTransition] = useTransition()
-
-	const referrer = useReferrer()
-
-	const user = usePlayerUser()!
+	const [isPending, errorText, register] = useRegisterSession()
 
 	return (
 		<form onSubmit={event => {
 			event.preventDefault()
-			setErrorText("")
-
 			const sessionName = `${event.currentTarget.sessionName.value}`
-
-			startTransition(async () =>
-			{
-				const session = await registerSession(user, sessionName)
-				if (typeof session === "string")
-				{
-					setErrorText(session)
-					return
-				}
-
-				router.push(referrer)
-			})
+			register(sessionName)
 		}}>
 			<p><label htmlFor="sessionName">Name:</label> <input id="sessionName" name="sessionName" disabled={isPending}/></p>
 

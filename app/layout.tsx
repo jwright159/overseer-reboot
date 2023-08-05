@@ -1,8 +1,8 @@
 import { ReactNode } from 'react'
 import './globals.css'
 import type { Metadata } from 'next'
-import { ReferrerContextProvider } from "@/lib/referrer"
-import { CookieDataProvider } from "@/lib/cookies-server"
+import { ReferrerProvider } from "@/lib/referrer"
+import { RegistrationProvider } from "@/lib/registration"
 
 export const metadata: Metadata = {
 	title: 'Overseer Reboot',
@@ -18,11 +18,11 @@ export default async function RootLayout({
 	return (
 		<html lang="en">
 			<body>
-				<ReferrerContextProvider>
-					<CookieDataProvider>
+				<ReferrerProvider>
+					<RegistrationProvider>
 						{children}
-					</CookieDataProvider>
-				</ReferrerContextProvider>
+					</RegistrationProvider>
+				</ReferrerProvider>
 			</body>
 		</html>
 	)
