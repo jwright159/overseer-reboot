@@ -1,10 +1,10 @@
 "use client"
 
-import Link from 'next/link'
-import styles from './sburb-header.module.css'
-import { ReactNode } from 'react'
-import HeaderProgressBar from './header-progress-bar'
-import { useLogoutCharacter } from "@/lib/registration"
+import Link from "next/link"
+import { ReactNode } from "react"
+import HeaderProgressBar from "./header-progress-bar"
+import styles from "./sburb-header.module.css"
+import { useLogoutCharacter } from "@/lib/context/character-id"
 
 export default function SBURBHeader({
 	children,

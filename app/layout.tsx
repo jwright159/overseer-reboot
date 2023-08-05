@@ -2,7 +2,6 @@ import { ReactNode } from 'react'
 import './globals.css'
 import type { Metadata } from 'next'
 import { ReferrerProvider } from "@/lib/referrer"
-import { RegistrationProvider } from "@/lib/registration"
 
 export const metadata: Metadata = {
 	title: 'Overseer Reboot',
@@ -19,9 +18,7 @@ export default async function RootLayout({
 		<html lang="en">
 			<body>
 				<ReferrerProvider>
-					<RegistrationProvider>
-						{children}
-					</RegistrationProvider>
+					{children}
 				</ReferrerProvider>
 			</body>
 		</html>

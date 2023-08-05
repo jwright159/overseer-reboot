@@ -1,8 +1,8 @@
 "use client"
 
 import { User as UserModel } from "@prisma/client"
-import { useUserId } from "../registration"
 import { createCache } from "./context"
+import { useUserId } from "./user-id"
 
 export interface User extends UserModel {
 	characterIds: number[],

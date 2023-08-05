@@ -56,3 +56,13 @@ export function createCache<T extends {id: number}>(table: string): [typeof useC
 
 	return [useCachedValue, useSetCachedValue]
 }
+
+export function filterErrors<T>(object: T | string, setErrorText: (text: string) => void)
+{
+	if (typeof object === "string")
+	{
+		setErrorText(object)
+		return null
+	}
+	return object
+}

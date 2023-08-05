@@ -1,7 +1,7 @@
 "use client"
 
+import { useLoginCharacter } from "@/lib/context/character-id"
 import Link from "next/link"
-import { useLoginCharacter } from "@/lib/registration"
 
 export default function RegisterCharacterForm()
 {

@@ -1,7 +1,7 @@
 "use client"
 
+import { useCharacterId } from "./character-id"
 import { createCache } from "./context"
-import { useCharacterId } from "../registration"
 import { Character } from "@prisma/client"
 
 export const [useCharacter, useSetCharacter] = createCache<Character>("character")

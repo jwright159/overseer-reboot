@@ -1,6 +1,6 @@
 "use client"
 
-import { useRegisterSession } from "@/lib/registration"
+import { useRegisterSession } from "@/lib/context/session"
 
 export default function RegisterSessionForm()
 {

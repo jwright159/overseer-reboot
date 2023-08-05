@@ -1,6 +1,6 @@
 "use client"
 
-import { useLogoutUser } from "@/lib/registration"
+import { useLogoutUser } from "@/lib/context/user-id"
 
 export default function LogoutButton()
 {

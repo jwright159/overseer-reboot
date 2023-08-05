@@ -1,4 +1,6 @@
-import prisma from "./prisma"
+"use server"
+
+import prisma from "../prisma"
 
 export async function getPlayerTeam()
 {

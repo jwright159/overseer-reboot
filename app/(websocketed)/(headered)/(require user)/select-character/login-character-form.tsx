@@ -3,7 +3,7 @@
 import { usePlayerUser } from "@/lib/context/user"
 import { useCharacter } from "@/lib/context/character"
 import { useEntity } from "@/lib/context/entity"
-import { useLoginCharacter } from "@/lib/registration"
+import { useLoginCharacter } from "@/lib/context/character-id"
 
 export default function LoginCharacterForm()
 {

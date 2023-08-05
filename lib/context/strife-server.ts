@@ -1,8 +1,8 @@
 "use server"
 
 import { Character } from "@prisma/client"
-import prisma from "./prisma"
-import { getUnderlingTeam } from "./team"
+import prisma from "../prisma"
+import { getUnderlingTeam } from "./team-server"
 
 export async function startStrife(character: Character)
 {

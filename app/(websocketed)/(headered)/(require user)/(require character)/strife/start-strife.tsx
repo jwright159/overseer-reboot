@@ -1,7 +1,7 @@
 "use client"
 
 import { usePlayerCharacter } from "@/lib/context/character"
-import { startStrife } from "@/lib/strife"
+import { startStrife } from "@/lib/context/strife-server"
 import { useTransition } from "react"
 
 export default function StartStrife()

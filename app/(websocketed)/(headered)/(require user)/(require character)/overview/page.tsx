@@ -2,8 +2,8 @@
 
 import MainPanel from "@/components/main-panel"
 import { usePlayerCharacter } from "@/lib/context/character"
+import { useDeleteCharacter } from "@/lib/context/character-id"
 import { usePlayerEntity, useEntityState } from "@/lib/context/entity"
-import { useDeleteCharacter } from "@/lib/registration"
 import { useState } from "react"
 
 export default function Overview()

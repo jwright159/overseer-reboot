@@ -1,6 +1,6 @@
 "use client"
 
-import { useLoginUser } from "@/lib/registration"
+import { useLoginUser } from "@/lib/context/user-id"
 
 export default function RegisterForm()
 {
