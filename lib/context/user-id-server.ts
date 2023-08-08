@@ -1,5 +1,6 @@
 "use server"
 
+import prisma from "@/lib/prisma"
 import { User } from "@prisma/client"
 import { unsealCookie, sealCookie } from "../cookies-server"
 
