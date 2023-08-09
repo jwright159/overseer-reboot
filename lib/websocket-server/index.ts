@@ -37,10 +37,6 @@ function registerAuthMessages(io: Server, socket: Socket)
 			const cookie = parseCookie(socket.handshake.headers.cookie ?? "")[cookieName]
 			const cookieData = await unsealCookieAgnostic(cookie)
 			const userId = await parseUserId(cookieData)
-			console.log(event)
-			console.log(cookie)
-			console.log(cookieData)
-			console.log(userId)
 			authenticated = !!userId
 		}
 		
