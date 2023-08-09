@@ -31,7 +31,7 @@ export function LoginRedirector({
 	{
 		if (user === undefined)
 			router.push("/login")
-	})
+	}, [user])
 
 	return user ? children :
 		<MainPanel title="Loading">

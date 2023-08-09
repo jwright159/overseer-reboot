@@ -1,12 +1,16 @@
 "use server"
 
-import prisma from "@/lib/prisma"
 import { User } from "@prisma/client"
 import { unsealCookie, sealCookie } from "../cookies-server"
+import prisma from "../prisma"
 
 export async function getUserId(): Promise<number>
 {
-	const cookieData = await unsealCookie()
+	return parseUserId(await unsealCookie())
+}
+
+export async function parseUserId(cookieData: any): Promise<number>
+{
 	if (!cookieData) return 0
 
 	const { userId, password } = cookieData

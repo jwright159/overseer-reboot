@@ -2,7 +2,7 @@
 
 import MainPanel from "@/components/main-panel"
 import { usePlayerEntity } from "@/lib/context/entity"
-import { useWebSocket } from "@/lib/websocket"
+import { useWebSocket } from "@/lib/websocket-client"
 import { useEffect, useState } from "react"
 
 export default function Pesterchum()

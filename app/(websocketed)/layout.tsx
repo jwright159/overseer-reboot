@@ -1,6 +1,8 @@
+"use server"
+
 import { CharacterIdProvider } from "@/lib/context/character-id"
 import { UserIdProvider } from "@/lib/context/user-id"
-import { WebSocketProvider } from "@/lib/websocket"
+import { WebSocketProvider } from "@/lib/websocket-client"
 import { ReactNode } from "react"
 
 export default async function WebSocketLayout({

@@ -1,18 +1,18 @@
-import { PrismaClient } from '@prisma/client'
-import * as dotenv from 'dotenv'
+import { PrismaClient } from "@prisma/client"
+import { configDotenv } from "dotenv"
 
 let prisma: PrismaClient
 
-if (process.env.NODE_ENV === 'production')
+if (process.env.NODE_ENV === "production")
 {
-	dotenv.config({ path: 'prisma/.env.prod' })
+	configDotenv({ path: "prisma/.env.prod" })
 	prisma = new PrismaClient()
 }
 else
 {
 	if (!global.prisma)
 	{
-		dotenv.config({ path: 'prisma/.env.dev' })
+		configDotenv({ path: "prisma/.env.dev" })
 		global.prisma = new PrismaClient()
 	}
 	

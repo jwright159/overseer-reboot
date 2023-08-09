@@ -4,6 +4,7 @@ import SBURBHeader from "@/app/(websocketed)/(headered)/components/sburb-header"
 import MainPanel from "@/components/main-panel"
 import { useState, useEffect, ReactNode, createContext, useContext } from "react"
 import { io, Socket } from "socket.io-client"
+import { useUserId } from "./context/user-id"
 
 const WebSocketContext = createContext<Socket | null>(null)
 
@@ -17,6 +18,7 @@ export function WebSocketProvider({
 {
 	const [socket, setSocket] = useState<Socket | null>(null)
 	const [connected, setConnected] = useState(false)
+	const userId = useUserId()
 
 	useEffect(() =>
 	{
@@ -38,7 +40,7 @@ export function WebSocketProvider({
 		{
 			socket.disconnect()
 		}
-	}, [])
+	}, [userId])
 
 	return (socket && connected ?
 		<WebSocketContext.Provider value={socket}>

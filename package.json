@@ -11,7 +11,7 @@
     "migrate:dev": "dotenv -e prisma/.env.dev -- npx prisma migrate dev",
     "migrateCreateOnly:dev": "dotenv -e prisma/.env.dev -- npx prisma migrate dev --create-only",
     "studio:dev": "dotenv -e prisma/.env.dev -- npx prisma studio",
-	"postinstall": "patch-package"
+    "postinstall": "patch-package"
   },
   "dependencies": {
     "@prisma/client": "^5.0.0",
@@ -21,6 +21,7 @@
     "@types/react-dom": "18.2.6",
     "bcrypt": "^5.1.0",
     "bufferutil": "^4.0.7",
+    "cookies": "^0.8.0",
     "dotenv": "^16.3.1",
     "dotenv-cli": "^7.2.1",
     "eslint": "8.44.0",

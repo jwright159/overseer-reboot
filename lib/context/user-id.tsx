@@ -76,7 +76,7 @@ export function UserIdProvider({
 {
 	const [userId, setUserId] = useState<number | null>(null)
 
-	useEffect(() => {(async () => setUserId(await getUserId()))()}, [])
+	useEffect(() => void (async () => setUserId(await getUserId()))(), [])
 
 	return (
 		<UserIdContext.Provider value={userId}>
